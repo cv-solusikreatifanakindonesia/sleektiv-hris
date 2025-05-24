@@ -26672,7 +26672,7 @@ msgstr ""
 
 #: .\templates\initialize_database\sleektiv_user.html:99
 msgid ""
-"Authenticate with your password to initialize the Horilla HRMS database."
+"Authenticate with your password to initialize the Sleektiv - HRIS database."
 msgstr ""
 
 #: .\templates\initialize_database\sleektiv_user_signup.html:28
@@ -26680,7 +26680,7 @@ msgid "Sign Up"
 msgstr ""
 
 #: .\templates\initialize_database\sleektiv_user_signup.html:31
-msgid "Please sign up to access the Horilla HRMS."
+msgid "Please sign up to access the Sleektiv - HRIS."
 msgstr ""
 
 #: .\templates\initialize_database\sleektiv_user_signup.html:118

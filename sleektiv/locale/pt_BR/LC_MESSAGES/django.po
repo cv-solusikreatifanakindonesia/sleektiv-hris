@@ -25157,16 +25157,16 @@ msgid "Go To Home"
 msgstr "Ir para casa"
 
 #: templates/initialize_database/sleektiv_user.html:99
-msgid "Authenticate with your password to initialize the Horilla HRMS database."
-msgstr "Autenticar com sua senha para inicializar o banco de dados do Horilla HRMS."
+msgid "Authenticate with your password to initialize the Sleektiv - HRIS database."
+msgstr "Autenticar com sua senha para inicializar o banco de dados do Sleektiv - HRIS."
 
 #: templates/initialize_database/sleektiv_user_signup.html:28
 msgid "Sign Up"
 msgstr "Criar conta"
 
 #: templates/initialize_database/sleektiv_user_signup.html:31
-msgid "Please sign up to access the Horilla HRMS."
-msgstr "Inscreva-se para acessar o Horilla HRMS."
+msgid "Please sign up to access the Sleektiv - HRIS."
+msgstr "Inscreva-se para acessar o Sleektiv - HRIS."
 
 #: templates/initialize_database/sleektiv_user_signup.html:118
 msgid "Secure Sign-up"
