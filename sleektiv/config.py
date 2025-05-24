@@ -1,7 +1,7 @@
 """
 sleektiv/config.py
 
-Horilla app configurations
+Sleektiv app configurations
 """
 
 import importlib

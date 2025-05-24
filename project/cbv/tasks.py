@@ -17,11 +17,11 @@ from django.utils.translation import gettext_lazy as _
 from base.methods import get_subordinates
 from sleektiv_views.cbv_methods import login_required
 from sleektiv_views.generic.cbv.views import (
-    HorillaCardView,
-    HorillaDetailedView,
-    HorillaFormView,
-    HorillaListView,
-    HorillaNavView,
+    SleektivCardView,
+    SleektivDetailedView,
+    SleektivFormView,
+    SleektivListView,
+    SleektivNavView,
     TemplateView,
 )
 from project.cbv.project_stage import StageDynamicCreateForm
@@ -45,7 +45,7 @@ class TasksTemplateView(TemplateView):
 
 
 @method_decorator(login_required, name="dispatch")
-class TaskListView(HorillaListView):
+class TaskListView(SleektivListView):
     """
     list view of the page
     """
@@ -159,7 +159,7 @@ class TaskListView(HorillaListView):
 
 
 @method_decorator(login_required, name="dispatch")
-class TasksNavBar(HorillaNavView):
+class TasksNavBar(SleektivNavView):
     """
     navbar of teh page
     """
@@ -245,7 +245,7 @@ class TasksNavBar(HorillaNavView):
 
 
 @method_decorator(login_required, name="dispatch")
-class TaskCreateForm(HorillaFormView):
+class TaskCreateForm(SleektivFormView):
     """
     Form view for create and update tasks
     """
@@ -400,7 +400,7 @@ class DynamicTaskCreateFormView(TaskCreateForm):
 
 
 @method_decorator(login_required, name="dispatch")
-class TaskDetailView(HorillaDetailedView):
+class TaskDetailView(SleektivDetailedView):
     """
     detail view of the task page
     """
@@ -426,7 +426,7 @@ class TaskDetailView(HorillaDetailedView):
 
 
 @method_decorator(login_required, name="dispatch")
-class TaskCardView(HorillaCardView):
+class TaskCardView(SleektivCardView):
     """
     card view of the page
     """
@@ -571,7 +571,7 @@ class TasksInIndividualView(TaskListView):
                 """
 
     def get_queryset(self):
-        queryset = HorillaListView.get_queryset(self)
+        queryset = SleektivListView.get_queryset(self)
         employee_id = self.request.GET.get("employee_id")
         project_id = self.request.GET.get("project_id")
         queryset = queryset.filter(

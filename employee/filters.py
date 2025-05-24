@@ -16,13 +16,13 @@ from accessibility.methods import check_is_accessible
 from accessibility.models import DefaultAccessibility
 from base.methods import filtersubordinatesemployeemodel
 from employee.models import DisciplinaryAction, Employee, Policy
-from sleektiv.filters import FilterSet, HorillaFilterSet, filter_by_name
+from sleektiv.filters import FilterSet, SleektivFilterSet, filter_by_name
 from sleektiv.sleektiv_middlewares import _thread_locals
 from sleektiv_documents.models import Document
 from sleektiv_views.templatetags.generic_template_filters import getattribute
 
 
-class EmployeeFilter(HorillaFilterSet):
+class EmployeeFilter(SleektivFilterSet):
     """
     Filter set class for Candidate model
 

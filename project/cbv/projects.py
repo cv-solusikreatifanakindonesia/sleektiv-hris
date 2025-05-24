@@ -17,10 +17,10 @@ from employee.models import Employee
 from sleektiv.sleektiv_middlewares import _thread_locals
 from sleektiv_views.cbv_methods import login_required, permission_required
 from sleektiv_views.generic.cbv.views import (
-    HorillaCardView,
-    HorillaFormView,
-    HorillaListView,
-    HorillaNavView,
+    SleektivCardView,
+    SleektivFormView,
+    SleektivListView,
+    SleektivNavView,
     TemplateView,
 )
 from project.cbv.cbv_decorators import is_projectmanager_or_member_or_perms
@@ -51,7 +51,7 @@ class ProjectsView(TemplateView):
 @method_decorator(
     is_projectmanager_or_member_or_perms("project.view_project"), name="dispatch"
 )
-class ProjectsNavView(HorillaNavView):
+class ProjectsNavView(SleektivNavView):
     """
     Nav bar
     """
@@ -149,7 +149,7 @@ class ProjectsNavView(HorillaNavView):
 @method_decorator(
     is_projectmanager_or_member_or_perms("project.view_project"), name="dispatch"
 )
-class ProjectsList(HorillaListView):
+class ProjectsList(SleektivListView):
     """
     Projects list view
     """
@@ -271,7 +271,7 @@ class ProjectsList(HorillaListView):
 
 @method_decorator(login_required, name="dispatch")
 # @method_decorator(permission_required("project.add_project"), name="dispatch")
-class ProjectFormView(HorillaFormView):
+class ProjectFormView(SleektivFormView):
     """
     form view for create project
     """
@@ -323,7 +323,7 @@ class DynamicProjectCreationFormView(ProjectFormView):
 @method_decorator(
     is_projectmanager_or_member_or_perms("project.view_project"), name="dispatch"
 )
-class ProjectCardView(HorillaCardView):
+class ProjectCardView(SleektivCardView):
     """
     For card view
     """

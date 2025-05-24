@@ -2,8 +2,8 @@
 models.py
 =========
 
-This module defines the abstract base model `HorillaModel` for the Sleektiv - HRIS project.
-The `HorillaModel` provides common fields and functionalities for other models within
+This module defines the abstract base model `SleektivModel` for the Sleektiv - HRIS project.
+The `SleektivModel` provides common fields and functionalities for other models within
 the application, such as tracking creation and modification timestamps and user
 information, audit logging, and active/inactive status management.
 """
@@ -34,10 +34,10 @@ def url(self: FieldFile):
 setattr(FieldFile, "url", url)
 
 
-class HorillaModel(models.Model):
+class SleektivModel(models.Model):
     """
     An abstract base model that includes common fields and functionalities
-    for models within the Horilla application.
+    for models within the Sleektiv application.
     """
 
     created_at = models.DateTimeField(
@@ -70,7 +70,7 @@ class HorillaModel(models.Model):
 
     class Meta:
         """
-        Meta class for HorillaModel
+        Meta class for SleektivModel
         """
 
         abstract = True
@@ -97,7 +97,7 @@ class HorillaModel(models.Model):
             if request and not request.user.is_anonymous:
                 self.modified_by = user
 
-        super(HorillaModel, self).save(*args, **kwargs)
+        super(SleektivModel, self).save(*args, **kwargs)
 
     def get_verbose_name(self):
         return self._meta.verbose_name
@@ -128,4 +128,4 @@ class HorillaModel(models.Model):
             obj.save()
 
 
-auditlog.register(HorillaModel, serialize_data=True)
+auditlog.register(SleektivModel, serialize_data=True)

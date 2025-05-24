@@ -23,7 +23,7 @@ from attendance.views.dashboard import (
 from attendance.views.views import *
 from base.backends import ConfiguredEmailBackend
 from base.methods import generate_pdf, is_reportingmanager
-from base.models import HorillaMailTemplate
+from base.models import SleektivMailTemplate
 from employee.filters import EmployeeFilter
 
 from ...api_decorators.base.decorators import (
@@ -99,7 +99,7 @@ class ClockInAPIView(APIView):
                 if start_time_sec > end_time_sec:
                     # night shift
                     # ------------------
-                    # Night shift in Horilla consider a 24 hours from noon to next day noon,
+                    # Night shift in Sleektiv consider a 24 hours from noon to next day noon,
                     # the shift day taken today if the attendance clocked in after 12 O clock.
 
                     if mid_day_sec > now_sec:
@@ -867,7 +867,7 @@ class MailTemplateView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        instances = HorillaMailTemplate.objects.all()
+        instances = SleektivMailTemplate.objects.all()
         serializer = MailTemplateSerializer(instances, many=True)
         return Response(serializer.data, status=200)
 
@@ -886,7 +886,7 @@ class ConvertedMailTemplateConvert(APIView):
         template_id = request.data.get("template_id", None)
         employee_id = request.data.get("employee_id", None)
         employee = Employee.objects.filter(id=employee_id).first()
-        bdy = HorillaMailTemplate.objects.filter(id=template_id).first()
+        bdy = SleektivMailTemplate.objects.filter(id=template_id).first()
         template_bdy = template.Template(bdy.body)
         context = template.Context(
             {"instance": employee, "self": request.user.employee_get}
@@ -918,7 +918,7 @@ class OfflineEmployeeMailsend(APIView):
         employee = Employee.objects.get(id=employee_id)
         template_attachment_ids = request.POST.getlist("template_attachments")
         bodys = list(
-            HorillaMailTemplate.objects.filter(
+            SleektivMailTemplate.objects.filter(
                 id__in=template_attachment_ids
             ).values_list("body", flat=True)
         )

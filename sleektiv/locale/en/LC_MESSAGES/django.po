@@ -12837,7 +12837,7 @@ msgid "{} not found."
 msgstr ""
 
 #: .\base\views.py:1419
-msgid "Test mail from Horilla"
+msgid "Test mail from Sleektiv"
 msgstr ""
 
 #: .\base\views.py:1476
@@ -26918,7 +26918,7 @@ msgstr ""
 
 #, fuzzy
 #~| msgid "recruitment"
-#~ msgid "Horilla - Open Recruitments"
+#~ msgid "Sleektiv - Open Recruitments"
 #~ msgstr "Recruitment"
 
 #, fuzzy

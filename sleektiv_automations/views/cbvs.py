@@ -15,7 +15,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _trans
 from django.views import View
 
-from base.models import HorillaMailTemplate
+from base.models import SleektivMailTemplate
 from sleektiv.decorators import login_required, permission_required
 from sleektiv_automations import models
 from sleektiv_automations.filters import AutomationFilter
@@ -27,7 +27,7 @@ from sleektiv_views.generic.cbv import views
 @method_decorator(
     permission_required("sleektiv_automation.view_mailautomation"), name="dispatch"
 )
-class AutomationSectionView(views.HorillaSectionView):
+class AutomationSectionView(views.SleektivSectionView):
     """
     AutomationSectionView
     """
@@ -47,7 +47,7 @@ class AutomationSectionView(views.HorillaSectionView):
 @method_decorator(
     permission_required("sleektiv_automation.view_mailautomation"), name="dispatch"
 )
-class AutomationNavView(views.HorillaNavView):
+class AutomationNavView(views.SleektivNavView):
     """
     AutomationNavView
     """
@@ -96,7 +96,7 @@ class AutomationNavView(views.HorillaNavView):
 @method_decorator(
     permission_required("sleektiv_automation.change_mailautomation"), name="dispatch"
 )
-class AutomationFormView(views.HorillaFormView):
+class AutomationFormView(views.SleektivFormView):
     """
     AutomationFormView
     """
@@ -129,7 +129,7 @@ class AutomationFormView(views.HorillaFormView):
 @method_decorator(
     permission_required("sleektiv_automation.view_mailautomation"), name="dispatch"
 )
-class AutomationListView(views.HorillaListView):
+class AutomationListView(views.SleektivListView):
     """
     AutomationListView
     """
@@ -183,7 +183,7 @@ class AutomationListView(views.HorillaListView):
 @method_decorator(
     permission_required("sleektiv_automation.view_mailautomation"), name="dispatch"
 )
-class AutomationDetailedView(views.HorillaDetailedView):
+class AutomationDetailedView(views.SleektivDetailedView):
     """
     AutomationDetailedView
     """
@@ -282,7 +282,7 @@ class LoadAutomationsView(View):
                 template_data = list(
                     serializers.deserialize("json", json.dumps([template_json]))
                 )[0].object
-                existing = HorillaMailTemplate.objects.filter(
+                existing = SleektivMailTemplate.objects.filter(
                     title=template_data.title
                 ).first()
                 if not existing:
@@ -297,7 +297,7 @@ class LoadAutomationsView(View):
 
             template_pk = automation_json["fields"].get("mail_template")
             template_body = template_lookup.get(template_pk)
-            mail_template = HorillaMailTemplate.objects.filter(
+            mail_template = SleektivMailTemplate.objects.filter(
                 body=template_body
             ).first()
             automation_obj.mail_template = mail_template

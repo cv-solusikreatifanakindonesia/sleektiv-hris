@@ -6,10 +6,10 @@ from django.db import models
 
 from accessibility.accessibility import ACCESSBILITY_FEATURE
 from employee.models import Employee
-from sleektiv.models import HorillaModel
+from sleektiv.models import SleektivModel
 
 
-class DefaultAccessibility(HorillaModel):
+class DefaultAccessibility(SleektivModel):
     """
     DefaultAccessibilityModel
     """

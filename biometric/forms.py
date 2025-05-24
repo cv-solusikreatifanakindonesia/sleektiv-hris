@@ -203,7 +203,7 @@ class COSECUserForm(Form):
 
 class DahuaUserForm(Form):
     """
-    This form is used to map a Horilla employee to a user entry on a Dahua biometric device.
+    This form is used to map a Sleektiv employee to a user entry on a Dahua biometric device.
     """
 
     CARD_STATUS_CHOICES = [
@@ -309,10 +309,10 @@ class DahuaUserForm(Form):
 
 class MapBioUsers(ModelForm):
     """
-    Form for mapping biometric users to Horilla employees.
+    Form for mapping biometric users to Sleektiv employees.
 
     This form is used to associate a biometric user (from a biometric device) with
-    an employee in the Horilla system.
+    an employee in the Sleektiv system.
     """
 
     class Meta:

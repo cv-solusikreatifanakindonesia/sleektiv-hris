@@ -13,8 +13,8 @@ from employee.models import Employee
 from sleektiv_automations.methods.methods import generate_choices
 from sleektiv_automations.models import MODEL_CHOICES, MailAutomation
 from sleektiv_widgets.forms import default_select_option_template
-from sleektiv_widgets.widgets.sleektiv_multi_select_field import HorillaMultiSelectField
-from sleektiv_widgets.widgets.select_widgets import HorillaMultiSelectWidget
+from sleektiv_widgets.widgets.sleektiv_multi_select_field import SleektivMultiSelectField
+from sleektiv_widgets.widgets.select_widgets import SleektivMultiSelectWidget
 
 
 class AutomationForm(ModelForm):
@@ -33,10 +33,10 @@ class AutomationForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["also_sent_to"] = HorillaMultiSelectField(
+        self.fields["also_sent_to"] = SleektivMultiSelectField(
             queryset=Employee.objects.all(),
             required=False,
-            widget=HorillaMultiSelectWidget(
+            widget=SleektivMultiSelectWidget(
                 filter_route_name="employee-widget-filter",
                 filter_class=EmployeeFilter,
                 filter_instance_contex_name="f",
@@ -84,7 +84,7 @@ class AutomationForm(ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        if isinstance(self.fields["also_sent_to"], HorillaMultiSelectField):
+        if isinstance(self.fields["also_sent_to"], SleektivMultiSelectField):
             self.errors.pop("also_sent_to", None)
 
             employee_data = self.fields["also_sent_to"].queryset.filter(

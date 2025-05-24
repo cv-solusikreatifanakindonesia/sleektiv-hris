@@ -18,7 +18,7 @@ from recruitment.forms import LinkedInAccountForm
 @method_decorator(
     permission_required("recruitment.view_linkedinaccount"), name="dispatch"
 )
-class LinkedinSettingSectionView(views.HorillaSectionView):
+class LinkedinSettingSectionView(views.SleektivSectionView):
     """
     LinkedinSetting SectionView
     """
@@ -38,7 +38,7 @@ class LinkedinSettingSectionView(views.HorillaSectionView):
 @method_decorator(
     permission_required("recruitment.view_linkedinaccount"), name="dispatch"
 )
-class LinkedInSettingNavView(views.HorillaNavView):
+class LinkedInSettingNavView(views.SleektivNavView):
     """
     LinkedInSetting nav view
     """
@@ -61,7 +61,7 @@ class LinkedInSettingNavView(views.HorillaNavView):
 @method_decorator(
     permission_required("recruitment.change_linkedinaccount"), name="dispatch"
 )
-class LinkedInAccountFormView(views.HorillaFormView):
+class LinkedInAccountFormView(views.SleektivFormView):
     """
     LinkedInForm View
     """
@@ -106,7 +106,7 @@ class LinkedInAccountFormView(views.HorillaFormView):
 @method_decorator(
     permission_required("recruitment.view_linkedinaccount"), name="dispatch"
 )
-class LinkedInSettingListView(views.HorillaListView):
+class LinkedInSettingListView(views.SleektivListView):
     """
     LinkedInSetting list view
     """

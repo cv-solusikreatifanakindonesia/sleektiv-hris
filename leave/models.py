@@ -14,7 +14,7 @@ from django.db.models import Q, Sum
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from base.sleektiv_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import SleektivCompanyManager
 from base.models import (
     Company,
     CompanyLeaves,
@@ -26,9 +26,9 @@ from base.models import (
 )
 from employee.models import Employee, EmployeeWorkInformation
 from sleektiv import sleektiv_middlewares
-from sleektiv.models import HorillaModel
+from sleektiv.models import SleektivModel
 from sleektiv_audit.methods import get_diff
-from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
+from sleektiv_audit.models import SleektivAuditInfo, SleektivAuditLog
 from leave.methods import (
     calculate_requested_days,
     company_leave_dates_list,
@@ -156,7 +156,7 @@ WEEK_DAYS = [
 ]
 
 
-class LeaveType(HorillaModel):
+class LeaveType(SleektivModel):
     icon = models.ImageField(null=True, blank=True, upload_to="leave/leave_icon")
     name = models.CharField(max_length=30, null=False)
     color = models.CharField(null=True, max_length=30)
@@ -206,7 +206,7 @@ class LeaveType(HorillaModel):
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = SleektivCompanyManager(related_company_field="company_id")
 
     class Meta:
         ordering = ["-id"]
@@ -309,7 +309,7 @@ class LeaveType(HorillaModel):
         return self.name
 
 
-class Holiday(HorillaModel):
+class Holiday(SleektivModel):
     name = models.CharField(max_length=30, null=False, verbose_name=_("Name"))
     start_date = models.DateField(verbose_name=_("Start Date"))
     end_date = models.DateField(null=True, blank=True, verbose_name=_("End Date"))
@@ -317,13 +317,13 @@ class Holiday(HorillaModel):
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = SleektivCompanyManager(related_company_field="company_id")
 
     def __str__(self):
         return self.name
 
 
-class CompanyLeave(HorillaModel):
+class CompanyLeave(SleektivModel):
     based_on_week = models.CharField(
         max_length=100, choices=WEEKS, blank=True, null=True
     )
@@ -331,7 +331,7 @@ class CompanyLeave(HorillaModel):
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = SleektivCompanyManager(related_company_field="company_id")
 
     class Meta:
         unique_together = ("based_on_week", "based_on_week_day")
@@ -340,7 +340,7 @@ class CompanyLeave(HorillaModel):
         return f"{dict(WEEK_DAYS).get(self.based_on_week_day)} | {dict(WEEKS).get(self.based_on_week)}"
 
 
-class AvailableLeave(HorillaModel):
+class AvailableLeave(SleektivModel):
     employee_id = models.ForeignKey(
         Employee,
         on_delete=models.CASCADE,
@@ -369,13 +369,13 @@ class AvailableLeave(HorillaModel):
     expired_date = models.DateField(
         blank=True, null=True, verbose_name=_("CarryForward Expired Date")
     )
-    objects = HorillaCompanyManager(
+    objects = SleektivCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
-    history = HorillaAuditLog(
+    history = SleektivAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            SleektivAuditInfo,
         ],
     )
 
@@ -569,7 +569,7 @@ def cal_effective_requested_days(start_date, end_date, leave_type_id, requested_
     return requested_days
 
 
-class LeaveRequest(HorillaModel):
+class LeaveRequest(SleektivModel):
     employee_id = models.ForeignKey(
         Employee, on_delete=models.CASCADE, verbose_name=_("Employee")
     )
@@ -617,10 +617,10 @@ class LeaveRequest(HorillaModel):
     reject_reason = models.TextField(
         blank=True, verbose_name=_("Reject Reason"), max_length=255
     )
-    history = HorillaAuditLog(
+    history = SleektivAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            SleektivAuditInfo,
         ],
     )
     created_by = models.ForeignKey(
@@ -631,7 +631,7 @@ class LeaveRequest(HorillaModel):
         related_name="leave_request_created",
         verbose_name=_("Created By"),
     )
-    objects = HorillaCompanyManager(
+    objects = SleektivCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
 
@@ -1146,7 +1146,7 @@ class LeaverequestFile(models.Model):
     file = models.FileField(upload_to="leave/request_files")
 
 
-class LeaverequestComment(HorillaModel):
+class LeaverequestComment(SleektivModel):
     """
     LeaverequestComment Model
     """
@@ -1160,7 +1160,7 @@ class LeaverequestComment(HorillaModel):
         return f"{self.comment}"
 
 
-class LeaveAllocationRequest(HorillaModel):
+class LeaveAllocationRequest(SleektivModel):
     leave_type_id = models.ForeignKey(
         LeaveType, on_delete=models.PROTECT, verbose_name=_("Leave type")
     )
@@ -1182,13 +1182,13 @@ class LeaveAllocationRequest(HorillaModel):
         max_length=30, choices=LEAVE_ALLOCATION_STATUS, default="requested"
     )
     reject_reason = models.TextField(blank=True, max_length=255)
-    history = HorillaAuditLog(
+    history = SleektivAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            SleektivAuditInfo,
         ],
     )
-    objects = HorillaCompanyManager(
+    objects = SleektivCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
 
@@ -1226,7 +1226,7 @@ class LeaveAllocationRequest(HorillaModel):
             return None
 
 
-class LeaveallocationrequestComment(HorillaModel):
+class LeaveallocationrequestComment(SleektivModel):
     """
     LeaveallocationrequestComment Model
     """
@@ -1248,7 +1248,7 @@ class LeaveRequestConditionApproval(models.Model):
     manager_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
 
 
-class RestrictLeave(HorillaModel):
+class RestrictLeave(SleektivModel):
     title = models.CharField(max_length=200, verbose_name=_("Title"))
     start_date = models.DateField(verbose_name=_("Start Date"))
     end_date = models.DateField(verbose_name=_("End Date"))
@@ -1293,7 +1293,7 @@ class RestrictLeave(HorillaModel):
         on_delete=models.CASCADE,
         verbose_name=_("Company"),
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = SleektivCompanyManager(related_company_field="company_id")
 
     def __str__(self) -> str:
         return f"{self.title}"
@@ -1301,7 +1301,7 @@ class RestrictLeave(HorillaModel):
 
 if apps.is_installed("attendance"):
 
-    class CompensatoryLeaveRequest(HorillaModel):
+    class CompensatoryLeaveRequest(SleektivModel):
         leave_type_id = models.ForeignKey(
             LeaveType, on_delete=models.PROTECT, verbose_name="Leave type"
         )
@@ -1319,13 +1319,13 @@ if apps.is_installed("attendance"):
             max_length=30, choices=LEAVE_ALLOCATION_STATUS, default="requested"
         )
         reject_reason = models.TextField(blank=True, max_length=255)
-        history = HorillaAuditLog(
+        history = SleektivAuditLog(
             related_name="history_set",
             bases=[
-                HorillaAuditInfo,
+                SleektivAuditInfo,
             ],
         )
-        objects = HorillaCompanyManager(
+        objects = SleektivCompanyManager(
             related_company_field="employee_id__employee_work_info__company_id"
         )
 
@@ -1370,7 +1370,7 @@ if apps.is_installed("attendance"):
             super().save(*args, **kwargs)
 
 
-class LeaveGeneralSetting(HorillaModel):
+class LeaveGeneralSetting(SleektivModel):
     """
     LeaveGeneralSettings
     """
@@ -1382,7 +1382,7 @@ class LeaveGeneralSetting(HorillaModel):
 
 if apps.is_installed("attendance"):
 
-    class CompensatoryLeaverequestComment(HorillaModel):
+    class CompensatoryLeaverequestComment(SleektivModel):
         """
         CompensatoryLeaverequestComment Model
         """
@@ -1398,7 +1398,7 @@ if apps.is_installed("attendance"):
             return f"{self.comment}"
 
 
-class EmployeePastLeaveRestrict(HorillaModel):
+class EmployeePastLeaveRestrict(SleektivModel):
     enabled = models.BooleanField(default=True)
 
 

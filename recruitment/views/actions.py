@@ -16,7 +16,7 @@ from django.utils.translation import gettext as __
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_http_methods
 
-from base.models import HorillaMailTemplate
+from base.models import SleektivMailTemplate
 from employee.models import Employee
 from sleektiv.decorators import login_required, permission_required
 from sleektiv.group_by import group_by_queryset
@@ -413,7 +413,7 @@ def get_template(request, obj_id=None):
     """
     body = ""
     if obj_id:
-        body = HorillaMailTemplate.objects.get(id=obj_id).body
+        body = SleektivMailTemplate.objects.get(id=obj_id).body
         template_bdy = template.Template(body)
     if request.GET.get("word"):
         word = request.GET.get("word")
@@ -434,7 +434,7 @@ def get_template_hint(request, obj_id=None):
     This method is used to return the mail template
     """
     if obj_id:
-        body = HorillaMailTemplate.objects.get(id=obj_id).body
+        body = SleektivMailTemplate.objects.get(id=obj_id).body
         template_bdy = template.Template(body)
     if request.GET.get("word"):
         word = request.GET.get("word")

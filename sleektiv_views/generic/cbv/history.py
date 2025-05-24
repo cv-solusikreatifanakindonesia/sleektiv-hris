@@ -10,14 +10,14 @@ from simple_history.utils import get_history_model_for_model
 
 from sleektiv.sleektiv_middlewares import _thread_locals
 from sleektiv_views.cbv_methods import hx_request_required
-from sleektiv_views.generic.cbv.views import HorillaFormView
+from sleektiv_views.generic.cbv.views import SleektivFormView
 from sleektiv_views.history_methods import get_diff
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaHistoryView(DetailView):
+class SleektivHistoryView(DetailView):
     """
-    GenericHorillaProfileView
+    GenericSleektivProfileView
     """
 
     template_name = "generic/sleektiv_history_view.html"
@@ -56,4 +56,4 @@ class HorillaHistoryView(DetailView):
         history.instance.save()
         messages.success(request, "History reverted")
 
-        return HorillaFormView.HttpResponse()
+        return SleektivFormView.HttpResponse()

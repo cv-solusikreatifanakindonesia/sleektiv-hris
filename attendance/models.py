@@ -27,13 +27,13 @@ from attendance.methods.utils import (
     validate_time_format,
     validate_time_in_minutes,
 )
-from base.sleektiv_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import SleektivCompanyManager
 from base.methods import is_company_leave, is_holiday
 from base.models import Company, EmployeeShift, EmployeeShiftDay, WorkType
 from employee.models import Employee
 from sleektiv.methods import get_sleektiv_model_class
-from sleektiv.models import HorillaModel
-from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
+from sleektiv.models import SleektivModel
+from sleektiv_audit.models import SleektivAuditInfo, SleektivAuditLog
 
 # to skip the migration issue with the old migrations
 _validate_time_in_minutes = validate_time_in_minutes
@@ -42,7 +42,7 @@ _validate_time_in_minutes = validate_time_in_minutes
 # Create your models here.
 
 
-class AttendanceActivity(HorillaModel):
+class AttendanceActivity(SleektivModel):
     """
     AttendanceActivity model
     """
@@ -70,7 +70,7 @@ class AttendanceActivity(HorillaModel):
     clock_out_date = models.DateField(null=True, verbose_name=_("Out Date"))
     out_datetime = models.DateTimeField(null=True)
     clock_out = models.TimeField(null=True, verbose_name=_("Check Out"))
-    objects = HorillaCompanyManager(
+    objects = SleektivCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
 
@@ -101,7 +101,7 @@ class AttendanceActivity(HorillaModel):
         return f"{self.employee_id} - {self.attendance_date} - {self.clock_in} - {self.clock_out}"
 
 
-class BatchAttendance(HorillaModel):
+class BatchAttendance(SleektivModel):
     """
     Batch attendance model
     """
@@ -112,7 +112,7 @@ class BatchAttendance(HorillaModel):
         return f"{self.title}-{self.id}"
 
 
-class Attendance(HorillaModel):
+class Attendance(SleektivModel):
     """
     Attendance model
     """
@@ -218,13 +218,13 @@ class Attendance(HorillaModel):
     )
     is_holiday = models.BooleanField(default=False)
     requested_data = models.JSONField(null=True, editable=False)
-    objects = HorillaCompanyManager(
+    objects = SleektivCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
-    history = HorillaAuditLog(
+    history = SleektivAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            SleektivAuditInfo,
         ],
     )
 
@@ -566,11 +566,11 @@ class Attendance(HorillaModel):
                 )
 
 
-class AttendanceRequestFile(HorillaModel):
+class AttendanceRequestFile(SleektivModel):
     file = models.FileField(upload_to="attendance/request_files")
 
 
-class AttendanceRequestComment(HorillaModel):
+class AttendanceRequestComment(SleektivModel):
     """
     AttendanceRequestComment Model
     """
@@ -584,7 +584,7 @@ class AttendanceRequestComment(HorillaModel):
         return f"{self.comment}"
 
 
-class AttendanceOverTime(HorillaModel):
+class AttendanceOverTime(SleektivModel):
     """
     AttendanceOverTime model
     """
@@ -641,7 +641,7 @@ class AttendanceOverTime(HorillaModel):
         null=True,
         verbose_name=_("Overtime Seconds"),
     )
-    objects = HorillaCompanyManager(
+    objects = SleektivCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
 
@@ -743,7 +743,7 @@ class AttendanceOverTime(HorillaModel):
         super().save(*args, **kwargs)
 
 
-class AttendanceLateComeEarlyOut(HorillaModel):
+class AttendanceLateComeEarlyOut(SleektivModel):
     """
     AttendanceLateComeEarlyOut model
     """
@@ -768,7 +768,7 @@ class AttendanceLateComeEarlyOut(HorillaModel):
         editable=False,
     )
     type = models.CharField(max_length=20, choices=choices, verbose_name=_("Type"))
-    objects = HorillaCompanyManager(
+    objects = SleektivCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
     created_at = models.DateTimeField(auto_now_add=True, null=True)
@@ -797,7 +797,7 @@ class AttendanceLateComeEarlyOut(HorillaModel):
             {self.attendance_id.employee_id.employee_last_name} - {self.type}"
 
 
-class AttendanceValidationCondition(HorillaModel):
+class AttendanceValidationCondition(SleektivModel):
     """
     AttendanceValidationCondition model
     """
@@ -817,7 +817,7 @@ class AttendanceValidationCondition(HorillaModel):
         default=False, verbose_name=_("Auto Approve OT")
     )
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
     def clean(self):
         """
@@ -828,7 +828,7 @@ class AttendanceValidationCondition(HorillaModel):
             raise ValidationError(_("You cannot add more conditions."))
 
 
-class GraceTime(HorillaModel):
+class GraceTime(SleektivModel):
     """
     Model for saving Grace time
     """
@@ -853,7 +853,7 @@ class GraceTime(HorillaModel):
     is_default = models.BooleanField(default=False)
 
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
     def __str__(self) -> str:
         return str(f"{self.allowed_time} - Hours")
@@ -904,7 +904,7 @@ class GraceTime(HorillaModel):
         super().save(*args, **kwargs)
 
 
-class AttendanceGeneralSetting(HorillaModel):
+class AttendanceGeneralSetting(SleektivModel):
     """
     AttendanceGeneralSettings
     """
@@ -918,7 +918,7 @@ class AttendanceGeneralSetting(HorillaModel):
         ),
     )
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
 
 class WorkRecords(models.Model):
@@ -980,7 +980,7 @@ class WorkRecords(models.Model):
     )
     day_percentage = models.FloatField(default=0)
     last_update = models.DateTimeField(null=True, blank=True)
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     def title_message(self):
         title_message = self.message

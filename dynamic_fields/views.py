@@ -11,14 +11,14 @@ from django.views.generic import View
 from dynamic_fields import forms, models
 from dynamic_fields.methods import structured
 from sleektiv.decorators import login_required, permission_required
-from sleektiv_views.generic.cbv.views import HorillaFormView
+from sleektiv_views.generic.cbv.views import SleektivFormView
 
 
 @method_decorator(login_required, name="dispatch")
 @method_decorator(
     permission_required("dynamic_fields.change_mailautomation"), name="dispatch"
 )
-class ChoiceFormView(HorillaFormView):
+class ChoiceFormView(SleektivFormView):
     """
     ChoiceFormView
     """
@@ -32,7 +32,7 @@ class ChoiceFormView(HorillaFormView):
 @method_decorator(
     permission_required("dynamic_fields.change_mailautomation"), name="dispatch"
 )
-class DynamicFieldFormView(HorillaFormView):
+class DynamicFieldFormView(SleektivFormView):
     """
     DynamicFieldFormView
     """

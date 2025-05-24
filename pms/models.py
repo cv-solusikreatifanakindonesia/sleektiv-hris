@@ -12,32 +12,32 @@ from django.db.models.signals import post_delete, post_save, pre_save
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from base.sleektiv_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import SleektivCompanyManager
 from base.models import Company, Department, JobPosition
 from employee.models import BonusPoint, Employee
-from sleektiv.models import HorillaModel
+from sleektiv.models import SleektivModel
 from sleektiv_audit.methods import get_diff
-from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
+from sleektiv_audit.models import SleektivAuditInfo, SleektivAuditLog
 from sleektiv_automations.methods.methods import get_model_class
 from sleektiv_views.cbv_methods import render_template
 
 """Objectives and key result section"""
 
 
-class Period(HorillaModel):
+class Period(SleektivModel):
     """this is a period model used for creating period"""
 
     period_name = models.CharField(max_length=150, unique=True)
     start_date = models.DateField()
     end_date = models.DateField()
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
-    objects = HorillaCompanyManager("company_id")
+    objects = SleektivCompanyManager("company_id")
 
     def __str__(self):
         return self.period_name
 
 
-class KeyResult(HorillaModel):
+class KeyResult(SleektivModel):
     """model used to create key results"""
 
     PROGRESS_CHOICES = (
@@ -57,7 +57,7 @@ class KeyResult(HorillaModel):
     target_value = models.IntegerField(null=True, blank=True, default=100)
     duration = models.IntegerField(null=True, blank=True)
     archive = models.BooleanField(default=False)
-    history = HorillaAuditLog(bases=[HorillaAuditInfo])
+    history = SleektivAuditLog(bases=[SleektivAuditInfo])
     company_id = models.ForeignKey(
         Company,
         null=True,
@@ -65,7 +65,7 @@ class KeyResult(HorillaModel):
         verbose_name=_("Company"),
         on_delete=models.CASCADE,
     )
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
     class Meta:
         """
@@ -80,7 +80,7 @@ class KeyResult(HorillaModel):
         return f"{self.title}"
 
 
-class Objective(HorillaModel):
+class Objective(SleektivModel):
     """Model used for creating objectives"""
 
     DURATION_UNIT = (
@@ -120,7 +120,7 @@ class Objective(HorillaModel):
     duration = models.IntegerField(default=1, validators=[MinValueValidator(0)])
     add_assignees = models.BooleanField(default=False)
     archive = models.BooleanField(default=False)
-    history = HorillaAuditLog(bases=[HorillaAuditInfo])
+    history = SleektivAuditLog(bases=[SleektivAuditInfo])
     company_id = models.ForeignKey(
         Company,
         null=True,
@@ -129,7 +129,7 @@ class Objective(HorillaModel):
         on_delete=models.CASCADE,
     )
     self_employee_progress_update = models.BooleanField(default=True)
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     class Meta:
         """
@@ -144,7 +144,7 @@ class Objective(HorillaModel):
         return f"{self.title}"
 
 
-class EmployeeObjective(HorillaModel):
+class EmployeeObjective(SleektivModel):
     """this is a EmployObjective model used for creating Employee objectives"""
 
     STATUS_CHOICES = (
@@ -201,9 +201,9 @@ class EmployeeObjective(HorillaModel):
     )
     progress_percentage = models.IntegerField(default=0)
 
-    history = HorillaAuditLog(bases=[HorillaAuditInfo], related_name="history_set")
+    history = SleektivAuditLog(bases=[SleektivAuditInfo], related_name="history_set")
     archive = models.BooleanField(default=False)
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     class Meta:
         """
@@ -265,8 +265,8 @@ class Comment(models.Model):
         blank=True,
     )
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    history = HorillaAuditLog(excluded_fields=["comment"], bases=[HorillaAuditInfo])
-    objects = HorillaCompanyManager(
+    history = SleektivAuditLog(excluded_fields=["comment"], bases=[SleektivAuditInfo])
+    objects = SleektivCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
 
@@ -324,8 +324,8 @@ class EmployeeKeyResult(models.Model):
     target_value = models.IntegerField(null=True, blank=True, default=0)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
-    history = HorillaAuditLog(bases=[HorillaAuditInfo])
-    objects = HorillaCompanyManager(
+    history = SleektivAuditLog(bases=[SleektivAuditInfo])
+    objects = SleektivCompanyManager(
         related_company_field="employee_objective_id__objective_id__company_id"
     )
     progress_percentage = models.IntegerField(default=0)
@@ -425,7 +425,7 @@ class EmployeeKeyResult(models.Model):
 """360degree feedback section"""
 
 
-class QuestionTemplate(HorillaModel):
+class QuestionTemplate(SleektivModel):
     """question template creation"""
 
     question_template = models.CharField(
@@ -433,13 +433,13 @@ class QuestionTemplate(HorillaModel):
     )
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
 
-    objects = HorillaCompanyManager("company_id")
+    objects = SleektivCompanyManager("company_id")
 
     def __str__(self):
         return self.question_template
 
 
-class Question(HorillaModel):
+class Question(SleektivModel):
     """question creation"""
 
     QUESTION_TYPE_CHOICE = (
@@ -460,13 +460,13 @@ class Question(HorillaModel):
         null=True,
         blank=True,
     )
-    objects = HorillaCompanyManager("template_id__company_id")
+    objects = SleektivCompanyManager("template_id__company_id")
 
     def __str__(self):
         return self.question
 
 
-class QuestionOptions(HorillaModel):
+class QuestionOptions(SleektivModel):
     """options for question"""
 
     question_id = models.ForeignKey(
@@ -480,10 +480,10 @@ class QuestionOptions(HorillaModel):
     option_b = models.CharField(max_length=250, null=True, blank=True)
     option_c = models.CharField(max_length=250, null=True, blank=True)
     option_d = models.CharField(max_length=250, null=True, blank=True)
-    objects = HorillaCompanyManager("question_id__template_id__company_id")
+    objects = SleektivCompanyManager("question_id__template_id__company_id")
 
 
-class Feedback(HorillaModel):
+class Feedback(SleektivModel):
     """feedback model for creating feedback"""
 
     STATUS_CHOICES = (
@@ -564,7 +564,7 @@ class Feedback(HorillaModel):
     cyclic_next_start_date = models.DateField(null=True, blank=True)
     cyclic_next_end_date = models.DateField(null=True, blank=True)
 
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     class Meta:
         ordering = ["-id"]
@@ -718,7 +718,7 @@ class Answer(models.Model):
     feedback_id = models.ForeignKey(
         Feedback, on_delete=models.PROTECT, related_name="feedback_answer"
     )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     def __str__(self):
         return f"{self.employee_id.employee_first_name} - {self.answer}"
@@ -743,10 +743,10 @@ class KeyResultFeedback(models.Model):
         blank=True,
         on_delete=models.DO_NOTHING,
     )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
 
-class Meetings(HorillaModel):
+class Meetings(SleektivModel):
     title = models.CharField(max_length=100)
     date = models.DateTimeField(null=True, blank=True)
     employee_id = models.ManyToManyField(
@@ -799,13 +799,13 @@ class MeetingsAnswer(models.Model):
     meeting_id = models.ForeignKey(
         Meetings, on_delete=models.PROTECT, related_name="meeting_answer"
     )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     def __str__(self):
         return f"{self.employee_id.employee_first_name} - {self.answer}"
 
 
-class EmployeeBonusPoint(HorillaModel):
+class EmployeeBonusPoint(SleektivModel):
     employee_id = models.ForeignKey(
         Employee,
         on_delete=models.DO_NOTHING,
@@ -824,7 +824,7 @@ class EmployeeBonusPoint(HorillaModel):
         on_delete=models.CASCADE,
         related_name="employeebonuspoint_set",
     )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     def __str__(self):
         return f"{self.employee_id.employee_first_name} - {self.bonus_point}"

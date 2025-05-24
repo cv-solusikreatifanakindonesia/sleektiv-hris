@@ -30,9 +30,9 @@ def update(self, *args, **kwargs):
 setattr(QuerySet, "update", update)
 
 
-class HorillaCompanyManager(models.Manager):
+class SleektivCompanyManager(models.Manager):
     """
-    HorillaCompanyManager
+    SleektivCompanyManager
     """
 
     def __init__(self, related_company_field=None, *args, **kwargs):

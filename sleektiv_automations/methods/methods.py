@@ -11,7 +11,7 @@ from django.http import QueryDict
 
 from base.templatetags.sleektivfilters import app_installed
 from employee.models import Employee
-from sleektiv.models import HorillaModel
+from sleektiv.models import SleektivModel
 
 recruitment_installed = False
 if app_installed("recruitment"):
@@ -20,7 +20,7 @@ if app_installed("recruitment"):
     recruitment_installed = True
 
 
-def get_related_models(model: HorillaModel) -> list:
+def get_related_models(model: SleektivModel) -> list:
     related_models = []
     for field in model._meta.get_fields():
         if field.one_to_many or field.one_to_one or field.many_to_many:

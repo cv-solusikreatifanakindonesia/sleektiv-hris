@@ -16,7 +16,7 @@ from django.http import QueryDict
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from base.sleektiv_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import SleektivCompanyManager
 from base.methods import get_next_month_same_date
 from base.models import (
     Company,
@@ -30,8 +30,8 @@ from base.models import (
 from employee.methods.duration_methods import strtime_seconds
 from employee.models import BonusPoint, Employee, EmployeeWorkInformation
 from sleektiv import sleektiv_middlewares
-from sleektiv.models import HorillaModel
-from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
+from sleektiv.models import SleektivModel
+from sleektiv_audit.models import SleektivAuditInfo, SleektivAuditLog
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +73,7 @@ def get_date_range(start_date, end_date):
     return date_list
 
 
-class FilingStatus(HorillaModel):
+class FilingStatus(SleektivModel):
     """
     FilingStatus model
     """
@@ -106,7 +106,7 @@ class FilingStatus(HorillaModel):
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
     def __str__(self) -> str:
         return str(self.filing_status)
@@ -115,7 +115,7 @@ class FilingStatus(HorillaModel):
         ordering = ["-id"]
 
 
-class Contract(HorillaModel):
+class Contract(SleektivModel):
     """
     Contract Model
     """
@@ -261,14 +261,14 @@ class Contract(HorillaModel):
     )
 
     note = models.TextField(null=True, blank=True, max_length=255)
-    history = HorillaAuditLog(
+    history = SleektivAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            SleektivAuditInfo,
         ],
     )
 
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     def __str__(self) -> str:
         return f"{self.contract_name} -{self.contract_start_date} - {self.contract_end_date}"
@@ -423,7 +423,7 @@ class WorkRecord(models.Model):
     is_leave_record = models.BooleanField(default=False)
     day_percentage = models.FloatField(default=0)
     last_update = models.DateTimeField(null=True, blank=True)
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     def save(self, *args, **kwargs):
         self.last_update = timezone.now()
@@ -704,7 +704,7 @@ class MultipleCondition(models.Model):
     )
 
 
-class Allowance(HorillaModel):
+class Allowance(SleektivModel):
     """
     Allowance model
     """
@@ -929,7 +929,7 @@ class Allowance(HorillaModel):
     )
     only_show_under_employee = models.BooleanField(default=False, editable=False)
     is_loan = models.BooleanField(default=False, editable=False)
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
     other_conditions = models.ManyToManyField(
         MultipleCondition, blank=True, editable=False
     )
@@ -1044,7 +1044,7 @@ class Allowance(HorillaModel):
         super().save()
 
 
-class Deduction(HorillaModel):
+class Deduction(SleektivModel):
     """
     Deduction model
     """
@@ -1236,7 +1236,7 @@ class Deduction(HorillaModel):
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
     only_show_under_employee = models.BooleanField(default=False, editable=False)
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
     is_installment = models.BooleanField(default=False, editable=False)
     other_conditions = models.ManyToManyField(
@@ -1326,7 +1326,7 @@ class Deduction(HorillaModel):
         super().save()
 
 
-class Payslip(HorillaModel):
+class Payslip(SleektivModel):
     """
     Payslip model
     """
@@ -1356,12 +1356,12 @@ class Payslip(HorillaModel):
         max_length=20, null=True, default="draft", choices=status_choices
     )
     sent_to_employee = models.BooleanField(null=True, default=False)
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
     installment_ids = models.ManyToManyField(Deduction, editable=False)
-    history = HorillaAuditLog(
+    history = SleektivAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            SleektivAuditInfo,
         ],
     )
 
@@ -1449,7 +1449,7 @@ class Payslip(HorillaModel):
         ]
 
 
-class LoanAccount(HorillaModel):
+class LoanAccount(SleektivModel):
     """
     This modal is used to store the loan Account details
     """
@@ -1492,7 +1492,7 @@ class LoanAccount(HorillaModel):
             null=True,
             editable=False,
         )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     def __str__(self):
         return f"{self.title} - {self.employee_id}"
@@ -1564,7 +1564,7 @@ class ReimbursementMultipleAttachment(models.Model):
     objects = models.Manager()
 
 
-class Reimbursement(HorillaModel):
+class Reimbursement(SleektivModel):
     """
     Reimbursement Model
     """
@@ -1632,7 +1632,7 @@ class Reimbursement(HorillaModel):
     allowance_id = models.ForeignKey(
         Allowance, on_delete=models.SET_NULL, null=True, editable=False
     )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     class Meta:
         ordering = ["-id"]
@@ -1781,7 +1781,7 @@ class ReimbursementFile(models.Model):
     objects = models.Manager()
 
 
-class ReimbursementrequestComment(HorillaModel):
+class ReimbursementrequestComment(SleektivModel):
     """
     ReimbursementRequestComment Model
     """

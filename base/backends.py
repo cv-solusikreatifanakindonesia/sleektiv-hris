@@ -18,7 +18,7 @@ from sleektiv.sleektiv_middlewares import _thread_locals
 logger = logging.getLogger(__name__)
 
 
-class DefaultHorillaMailBackend(EmailBackend):
+class DefaultSleektivMailBackend(EmailBackend):
     def __init__(
         self,
         host=None,
@@ -183,10 +183,10 @@ class DefaultHorillaMailBackend(EmailBackend):
 EMAIL_BACKEND = getattr(settings, "EMAIL_BACKEND", "")
 
 
-BACKEND_CLASS: EmailBackend = DefaultHorillaMailBackend
+BACKEND_CLASS: EmailBackend = DefaultSleektivMailBackend
 default = "base.backends.ConfiguredEmailBackend"
 
-setattr(BACKEND_CLASS, "send_messages", DefaultHorillaMailBackend.send_messages)
+setattr(BACKEND_CLASS, "send_messages", DefaultSleektivMailBackend.send_messages)
 
 if EMAIL_BACKEND and EMAIL_BACKEND != default:
     module_path, class_name = EMAIL_BACKEND.rsplit(".", 1)
@@ -240,7 +240,7 @@ def new_init(
     custom __init_method to override
     """
     request = getattr(_thread_locals, "request", None)
-    DefaultHorillaMailBackend()
+    DefaultSleektivMailBackend()
     user_id = ""
     if request and request.user and request.user.is_authenticated:
         user_id = request.user.pk

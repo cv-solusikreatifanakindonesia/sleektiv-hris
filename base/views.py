@@ -132,7 +132,7 @@ from base.models import (
     EmployeeShiftSchedule,
     EmployeeType,
     Holidays,
-    HorillaMailTemplate,
+    SleektivMailTemplate,
     JobPosition,
     JobRole,
     MultipleApprovalCondition,
@@ -624,9 +624,9 @@ def reset_send_success(request):
     return render(request, "reset_send.html")
 
 
-class HorillaPasswordResetView(PasswordResetView):
+class SleektivPasswordResetView(PasswordResetView):
     """
-    Horilla View for Reset Password
+    Sleektiv View for Reset Password
     """
 
     template_name = "forgot_password.html"
@@ -672,7 +672,7 @@ class HorillaPasswordResetView(PasswordResetView):
 
 class EmployeePasswordResetView(PasswordResetView):
     """
-    Horilla View for Employee Reset Password
+    Sleektiv View for Employee Reset Password
     """
 
     template_name = "forgot_password.html"
@@ -1391,7 +1391,7 @@ def mail_server_test_email(request):
     instance_id = request.GET.get("instance_id")
     white_labelling = getattr(sleektiv_apps, "WHITE_LABELLING", False)
     image_path = path.join(settings.STATIC_ROOT, "images/ui/sleektiv-logo.png")
-    company_name = "Horilla"
+    company_name = "Sleektiv"
 
     if white_labelling:
         hq = Company.objects.filter(hq=True).last()
@@ -1413,7 +1413,7 @@ def mail_server_test_email(request):
         form = DynamicMailTestForm(request.POST)
         if form.is_valid():
             email_to = form.cleaned_data["to_email"]
-            subject = _("Test mail from Horilla")
+            subject = _("Test mail from Sleektiv")
 
             # HTML content
             html_content = f"""
@@ -1557,7 +1557,7 @@ def view_mail_templates(request):
     """
     This method will render template to disply the offerletter templates
     """
-    templates = HorillaMailTemplate.objects.all()
+    templates = SleektivMailTemplate.objects.all()
     form = MailTemplateForm()
     if templates.exists():
         template = "mail/view_templates.html"
@@ -1578,7 +1578,7 @@ def view_mail_template(request, obj_id):
     """
     This method is used to display the template/form to edit
     """
-    template = HorillaMailTemplate.objects.get(id=obj_id)
+    template = SleektivMailTemplate.objects.get(id=obj_id)
     form = MailTemplateForm(instance=template)
     searchWords = form.get_template_language()
     if request.method == "POST":
@@ -1624,7 +1624,7 @@ def create_mail_templates(request):
 @permission_required("base.delete_sleektivmailtemplate")
 def delete_mail_templates(request):
     ids = request.GET.getlist("ids")
-    result = HorillaMailTemplate.objects.filter(id__in=ids).delete()
+    result = SleektivMailTemplate.objects.filter(id__in=ids).delete()
     messages.success(request, "Template deleted")
     return redirect(view_mail_templates)
 

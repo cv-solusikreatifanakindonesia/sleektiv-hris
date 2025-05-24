@@ -10,7 +10,7 @@ from django.forms.utils import ErrorList
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 
-from sleektiv_audit.models import AuditTag, HorillaAuditInfo
+from sleektiv_audit.models import AuditTag, SleektivAuditInfo
 
 
 class HistoryForm(forms.Form):

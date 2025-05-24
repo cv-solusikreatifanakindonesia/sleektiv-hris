@@ -4,7 +4,7 @@ const driver = window.driver.js.driver;
 
 
 var steps = [
-    { popover: { title: 'Dashboard', description: 'Horilla dashboard section' } },
+    { popover: { title: 'Dashboard', description: 'Sleektiv dashboard section' } },
     { element: '#attendance-activity-container', popover: { title: 'Mark Attendance', description: 'Used to mark your attendance' } },
 ];
 
@@ -42,7 +42,7 @@ setTimeout(() => {
         steps.push({ element: '.oh-sidebar__company:nth-child(1)', popover: { title: 'Company', description: 'Your current company access' } });
     }
     if ($('[data-id="dashboardNav"]').length) {
-        steps.push({ element: '[data-id="dashboardNav"]', popover: { title: 'App', description: 'Horilla Hr Apps. eg Dashboard' } });
+        steps.push({ element: '[data-id="dashboardNav"]', popover: { title: 'App', description: 'Sleektiv Hr Apps. eg Dashboard' } });
     }
 }, 1000);
 driverObj = driver(

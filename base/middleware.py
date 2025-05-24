@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.shortcuts import redirect
 
 from base.context_processors import AllCompany
-from base.sleektiv_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import SleektivCompanyManager
 from base.models import Company, ShiftRequest, WorkTypeRequest
 from employee.models import (
     DisciplinaryAction,
@@ -79,7 +79,7 @@ class CompanyMiddleware:
         """
         is_company_model = model in self._get_company_models()
         company_field = getattr(model, "company_id", None)
-        is_sleektiv_manager = isinstance(model.objects, HorillaCompanyManager)
+        is_sleektiv_manager = isinstance(model.objects, SleektivCompanyManager)
         related_company_field = getattr(model.objects, "related_company_field", None)
 
         if is_company_model:

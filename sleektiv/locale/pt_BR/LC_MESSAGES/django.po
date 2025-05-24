@@ -12401,8 +12401,8 @@ msgid "{} not found."
 msgstr "{} não encontrado."
 
 #: base/views.py:1413
-msgid "Test mail from Horilla"
-msgstr "Email de teste da Horilla"
+msgid "Test mail from Sleektiv"
+msgstr "Email de teste da Sleektiv"
 
 #: base/views.py:1470
 msgid "Something went wrong :"
@@ -25488,7 +25488,7 @@ msgstr "Progresso"
 
 #, fuzzy
 #~| msgid "recruitment"
-#~ msgid "Horilla - Open Recruitments"
+#~ msgid "Sleektiv - Open Recruitments"
 #~ msgstr "Recruitment"
 
 #, fuzzy

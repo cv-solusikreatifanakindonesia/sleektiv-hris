@@ -40,9 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaListView(ListView):
+class SleektivListView(ListView):
     """
-    HorillaListView
+    SleektivListView
     """
 
     filter_class: FilterSet = None
@@ -122,7 +122,7 @@ class HorillaListView(ListView):
 
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        # # update_initial_cache(request, CACHE, HorillaListView)
+        # # update_initial_cache(request, CACHE, SleektivListView)
 
         # hidden columns configuration
         existing_instance = models.ToggleColumn.objects.filter(
@@ -415,7 +415,7 @@ class HorillaListView(ListView):
             #         instance.ordered_ids = ordered_ids
             #         ordered_ids.append(instance.pk)
 
-        # CACHE.get(self.request.session.session_key + "cbv")[HorillaListView] = context
+        # CACHE.get(self.request.session.session_key + "cbv")[SleektivListView] = context
         from sleektiv.urls import path, urlpatterns
 
         self.export_path = f"export-list-view-{get_short_uuid(4)}/"
@@ -467,7 +467,7 @@ class HorillaListView(ListView):
 
         _model = self.model
 
-        class HorillaListViewResorce(resources.ModelResource):
+        class SleektivListViewResorce(resources.ModelResource):
             """
             Instant Resource class
             """
@@ -534,7 +534,7 @@ class HorillaListView(ListView):
                 cleaned_text = "\n".join(non_blank_lines)
                 return cleaned_text
 
-        book_resource = HorillaListViewResorce()
+        book_resource = SleektivListViewResorce()
 
         # Export the data using the resource
         dataset = book_resource.export(queryset)
@@ -592,16 +592,16 @@ class HorillaListView(ListView):
         return export_xlsx(json_data, columns)
 
 
-class HorillaSectionView(TemplateView):
+class SleektivSectionView(TemplateView):
     """
-    Horilla Template View
+    Sleektiv Template View
     """
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        # update_initial_cache(request, CACHE, HorillaListView)
+        # update_initial_cache(request, CACHE, SleektivListView)
 
     nav_url: str = ""
     view_url: str = ""
@@ -625,7 +625,7 @@ class HorillaSectionView(TemplateView):
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaDetailedView(DetailView):
+class SleektivDetailedView(DetailView):
     """
     HorillDetailedView
     """
@@ -633,8 +633,8 @@ class HorillaDetailedView(DetailView):
     title = "Detailed View"
     template_name = "generic/sleektiv_detailed_view.html"
     header: dict = {
-        "title": "Horilla",
-        "subtitle": "Horilla Detailed View",
+        "title": "Sleektiv",
+        "subtitle": "Sleektiv Detailed View",
         "avatar": "",
     }
     body: list = []
@@ -668,7 +668,7 @@ class HorillaDetailedView(DetailView):
         self.ordered_ids_key = f"ordered_ids_{self.model.__name__.lower()}"
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        # update_initial_cache(request, CACHE, HorillaDetailedView)
+        # update_initial_cache(request, CACHE, SleektivDetailedView)
 
     def get_context_data(self, **kwargs: Any):
         context = super().get_context_data(**kwargs)
@@ -705,16 +705,16 @@ class HorillaDetailedView(DetailView):
         context["cols"] = self.cols
 
         # CACHE.get(self.request.session.session_key + "cbv")[
-        #     HorillaDetailedView
+        #     SleektivDetailedView
         # ] = context
 
         return context
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaTabView(TemplateView):
+class SleektivTabView(TemplateView):
     """
-    HorillaTabView
+    SleektivTabView
     """
 
     view_id: str = get_short_uuid(3, "htv")
@@ -726,7 +726,7 @@ class HorillaTabView(TemplateView):
         super().__init__(**kwargs)
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        # update_initial_cache(request, CACHE, HorillaTabView)
+        # update_initial_cache(request, CACHE, SleektivTabView)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -739,15 +739,15 @@ class HorillaTabView(TemplateView):
         context["tabs"] = self.tabs
         context["view_id"] = self.view_id
 
-        # CACHE.get(self.request.session.session_key + "cbv")[HorillaTabView] = context
+        # CACHE.get(self.request.session.session_key + "cbv")[SleektivTabView] = context
 
         return context
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaCardView(ListView):
+class SleektivCardView(ListView):
     """
-    HorillaCardView
+    SleektivCardView
     """
 
     filter_class: FilterSet = None
@@ -792,7 +792,7 @@ class HorillaCardView(ListView):
         super().__init__(**kwargs)
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        # update_initial_cache(request, CACHE, HorillaCardView)
+        # update_initial_cache(request, CACHE, SleektivCardView)
         self._saved_filters = QueryDict()
         self.ordered_ids_key = f"ordered_ids_{self.model.__name__.lower()}"
 
@@ -870,7 +870,7 @@ class HorillaCardView(ListView):
                 ordered_ids.append(instance.pk)
         self.request.session[self.ordered_ids_key] = ordered_ids
 
-        # CACHE.get(self.request.session.session_key + "cbv")[HorillaCardView] = context
+        # CACHE.get(self.request.session.session_key + "cbv")[SleektivCardView] = context
         referrer = self.request.GET.get("referrer", "")
         if referrer:
             # Remove the protocol and domain part
@@ -925,9 +925,9 @@ def save(self: forms.ModelForm, commit=True, *args, **kwargs):
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaFormView(FormView):
+class SleektivFormView(FormView):
     """
-    HorillaFormView
+    SleektivFormView
     """
 
     class HttpResponse:
@@ -987,7 +987,7 @@ class HorillaFormView(FormView):
         self.request = request
         if not self.success_url:
             self.success_url = self.request.path
-        # update_initial_cache(request, CACHE, HorillaFormView)
+        # update_initial_cache(request, CACHE, SleektivFormView)
 
         if self.form_class:
             setattr(self.form_class, "structured", structured)
@@ -1177,15 +1177,15 @@ class HorillaFormView(FormView):
                 self.form_class.verbose_name = self.new_display_title
             form.close_button_attrs = self.close_button_attrs
             form.submit_button_attrs = self.submit_button_attrs
-            # CACHE.get(self.request.session.session_key + "cbv")[HorillaFormView] = form
+            # CACHE.get(self.request.session.session_key + "cbv")[SleektivFormView] = form
             self.form = form
         return self.form
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaNavView(TemplateView):
+class SleektivNavView(TemplateView):
     """
-    HorillaNavView
+    SleektivNavView
 
     filter form submit button id: applyFilter
     """
@@ -1212,7 +1212,7 @@ class HorillaNavView(TemplateView):
         super().__init__(**kwargs)
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        # update_initial_cache(request, CACHE, HorillaNavView)
+        # update_initial_cache(request, CACHE, SleektivNavView)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1241,14 +1241,14 @@ class HorillaNavView(TemplateView):
         context["active_view"] = models.ActiveView.objects.filter(
             path=self.request.path
         ).first()
-        # CACHE.get(self.request.session.session_key + "cbv")[HorillaNavView] = context
+        # CACHE.get(self.request.session.session_key + "cbv")[SleektivNavView] = context
         return context
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaProfileView(DetailView):
+class SleektivProfileView(DetailView):
     """
-    GenericHorillaProfileView
+    GenericSleektivProfileView
     """
 
     template_name = "generic/sleektiv_profile_view.html"
@@ -1274,7 +1274,7 @@ class HorillaProfileView(DetailView):
         request = getattr(_thread_locals, "request", None)
         self.request = request
         self.ordered_ids_key = f"ordered_ids_{self.model.__name__.lower()}"
-        # update_initial_cache(request, CACHE, HorillaProfileView)
+        # update_initial_cache(request, CACHE, SleektivProfileView)
 
         from sleektiv.urls import path, urlpatterns
 

@@ -2,11 +2,11 @@
 sleektiv_automations/filters.py
 """
 
-from sleektiv.filters import HorillaFilterSet, django_filters
+from sleektiv.filters import SleektivFilterSet, django_filters
 from sleektiv_automations.models import MailAutomation
 
 
-class AutomationFilter(HorillaFilterSet):
+class AutomationFilter(SleektivFilterSet):
     """
     AutomationFilter
     """

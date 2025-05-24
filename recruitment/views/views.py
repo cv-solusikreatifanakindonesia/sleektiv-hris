@@ -50,7 +50,7 @@ from base.methods import (
     get_key_instances,
     sortby,
 )
-from base.models import EmailLog, HorillaMailTemplate, JobPosition, clear_messages
+from base.models import EmailLog, SleektivMailTemplate, JobPosition, clear_messages
 from employee.models import Employee, EmployeeWorkInformation
 from employee.views import get_content_type
 from sleektiv import settings
@@ -1795,7 +1795,7 @@ def form_send_mail(request, cand_id=None):
     else:
         stage_id = None
 
-    templates = HorillaMailTemplate.objects.all()
+    templates = SleektivMailTemplate.objects.all()
     return render(
         request,
         "pipeline/pipeline_components/send_mail.html",
@@ -2011,7 +2011,7 @@ def send_acknowledgement(request):
             (file.name, file.read(), file.content_type) for file in other_attachments
         ]
         bodys = list(
-            HorillaMailTemplate.objects.filter(
+            SleektivMailTemplate.objects.filter(
                 id__in=template_attachment_ids
             ).values_list("body", flat=True)
         )

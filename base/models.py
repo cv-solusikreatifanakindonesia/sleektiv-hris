@@ -16,11 +16,11 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from base.sleektiv_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import SleektivCompanyManager
 from sleektiv import sleektiv_middlewares
 from sleektiv.sleektiv_middlewares import _thread_locals
-from sleektiv.models import HorillaModel
-from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
+from sleektiv.models import SleektivModel
+from sleektiv_audit.models import SleektivAuditInfo, SleektivAuditLog
 
 # Create your models here.
 WEEKS = [
@@ -65,7 +65,7 @@ def clear_messages(request):
         pass
 
 
-class Company(HorillaModel):
+class Company(SleektivModel):
     """
     Company model
     """
@@ -99,7 +99,7 @@ class Company(HorillaModel):
         return str(self.company)
 
 
-class Department(HorillaModel):
+class Department(SleektivModel):
     """
     Department model
     """
@@ -109,7 +109,7 @@ class Department(HorillaModel):
     )
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
 
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
     class Meta:
         verbose_name = _("Department")
@@ -140,7 +140,7 @@ class Department(HorillaModel):
         return str(self.department)
 
 
-class JobPosition(HorillaModel):
+class JobPosition(SleektivModel):
     """
     JobPosition model
     """
@@ -156,7 +156,7 @@ class JobPosition(HorillaModel):
     )
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
 
-    objects = HorillaCompanyManager("department_id__company_id")
+    objects = SleektivCompanyManager("department_id__company_id")
 
     class Meta:
         """
@@ -170,7 +170,7 @@ class JobPosition(HorillaModel):
         return str(self.job_position + " - (" + self.department_id.department) + ")"
 
 
-class JobRole(HorillaModel):
+class JobRole(SleektivModel):
     """JobRole model"""
 
     job_position_id = models.ForeignKey(
@@ -181,7 +181,7 @@ class JobRole(HorillaModel):
     )
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
 
-    objects = HorillaCompanyManager("job_position_id__department_id__company_id")
+    objects = SleektivCompanyManager("job_position_id__department_id__company_id")
 
     class Meta:
         """
@@ -196,7 +196,7 @@ class JobRole(HorillaModel):
         return f"{self.job_role} - {self.job_position_id.job_position}"
 
 
-class WorkType(HorillaModel):
+class WorkType(SleektivModel):
     """
     WorkType model
     """
@@ -204,7 +204,7 @@ class WorkType(HorillaModel):
     work_type = models.CharField(max_length=50, verbose_name=_("Work Type"))
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
 
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
     class Meta:
         """
@@ -237,7 +237,7 @@ class WorkType(HorillaModel):
         return self
 
 
-class RotatingWorkType(HorillaModel):
+class RotatingWorkType(SleektivModel):
     """
     RotatingWorkType model
     """
@@ -265,7 +265,7 @@ class RotatingWorkType(HorillaModel):
         blank=True,
         null=True,
     )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     class Meta:
         """
@@ -339,7 +339,7 @@ BASED_ON = [
 ]
 
 
-class RotatingWorkTypeAssign(HorillaModel):
+class RotatingWorkTypeAssign(SleektivModel):
     """
     RotatingWorkTypeAssign model
     """
@@ -400,13 +400,13 @@ class RotatingWorkTypeAssign(HorillaModel):
         blank=True,
         null=True,
     )
-    history = HorillaAuditLog(
+    history = SleektivAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            SleektivAuditInfo,
         ],
     )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     class Meta:
         """
@@ -429,7 +429,7 @@ class RotatingWorkTypeAssign(HorillaModel):
             raise ValidationError(_("Date must be greater than or equal to today"))
 
 
-class EmployeeType(HorillaModel):
+class EmployeeType(SleektivModel):
     """
     EmployeeType model
     """
@@ -437,7 +437,7 @@ class EmployeeType(HorillaModel):
     employee_type = models.CharField(max_length=50)
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
 
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     class Meta:
         """
@@ -482,7 +482,7 @@ class EmployeeShiftDay(models.Model):
     day = models.CharField(max_length=20, choices=DAY)
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
 
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
     class Meta:
         """
@@ -496,7 +496,7 @@ class EmployeeShiftDay(models.Model):
         return str(_(self.day).capitalize())
 
 
-class EmployeeShift(HorillaModel):
+class EmployeeShift(SleektivModel):
     """
     EmployeeShift model
     """
@@ -528,7 +528,7 @@ class EmployeeShift(HorillaModel):
             verbose_name=_("Grace Time"),
         )
 
-    objects = HorillaCompanyManager("employee_shift__company_id")
+    objects = SleektivCompanyManager("employee_shift__company_id")
 
     class Meta:
         """
@@ -568,7 +568,7 @@ class EmployeeShift(HorillaModel):
 from django.db.models import Case, When
 
 
-class EmployeeShiftSchedule(HorillaModel):
+class EmployeeShiftSchedule(SleektivModel):
     """
     EmployeeShiftSchedule model
     """
@@ -606,7 +606,7 @@ class EmployeeShiftSchedule(HorillaModel):
     )
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
 
-    objects = HorillaCompanyManager("shift_id__employee_shift__company_id")
+    objects = SleektivCompanyManager("shift_id__employee_shift__company_id")
 
     class Meta:
         """
@@ -638,7 +638,7 @@ class EmployeeShiftSchedule(HorillaModel):
         super().save(*args, **kwargs)
 
 
-class RotatingShift(HorillaModel):
+class RotatingShift(SleektivModel):
     """
     RotatingShift model
     """
@@ -668,7 +668,7 @@ class RotatingShift(HorillaModel):
         blank=True,
         null=True,
     )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     class Meta:
         """
@@ -736,7 +736,7 @@ class RotatingShift(HorillaModel):
         return total_shifts
 
 
-class RotatingShiftAssign(HorillaModel):
+class RotatingShiftAssign(SleektivModel):
     """
     RotatingShiftAssign model
     """
@@ -796,13 +796,13 @@ class RotatingShiftAssign(HorillaModel):
         blank=True,
         null=True,
     )
-    history = HorillaAuditLog(
+    history = SleektivAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            SleektivAuditInfo,
         ],
     )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     class Meta:
         """
@@ -830,7 +830,7 @@ class BaserequestFile(models.Model):
     objects = models.Manager()
 
 
-class WorkTypeRequest(HorillaModel):
+class WorkTypeRequest(SleektivModel):
     """
     WorkTypeRequest model
     """
@@ -869,13 +869,13 @@ class WorkTypeRequest(HorillaModel):
     approved = models.BooleanField(default=False, verbose_name=_("Approved"))
     canceled = models.BooleanField(default=False, verbose_name=_("Canceled"))
     work_type_changed = models.BooleanField(default=False)
-    history = HorillaAuditLog(
+    history = SleektivAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            SleektivAuditInfo,
         ],
     )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     class Meta:
         """
@@ -969,7 +969,7 @@ class WorkTypeRequest(HorillaModel):
             {self.employee_id.employee_last_name} - {self.requested_date}"
 
 
-class WorkTypeRequestComment(HorillaModel):
+class WorkTypeRequestComment(SleektivModel):
     """
     WorkTypeRequestComment Model
     """
@@ -986,7 +986,7 @@ class WorkTypeRequestComment(HorillaModel):
         return f"{self.comment}"
 
 
-class ShiftRequest(HorillaModel):
+class ShiftRequest(SleektivModel):
     """
     ShiftRequest model
     """
@@ -1035,13 +1035,13 @@ class ShiftRequest(HorillaModel):
     approved = models.BooleanField(default=False, verbose_name=_("Approved"))
     canceled = models.BooleanField(default=False, verbose_name=_("Canceled"))
     shift_changed = models.BooleanField(default=False)
-    history = HorillaAuditLog(
+    history = SleektivAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            SleektivAuditInfo,
         ],
     )
-    objects = HorillaCompanyManager("employee_id__employee_work_info__company_id")
+    objects = SleektivCompanyManager("employee_id__employee_work_info__company_id")
 
     class Meta:
         """
@@ -1132,7 +1132,7 @@ class ShiftRequest(HorillaModel):
             {self.employee_id.employee_last_name} - {self.requested_date}"
 
 
-class ShiftRequestComment(HorillaModel):
+class ShiftRequestComment(SleektivModel):
     """
     ShiftRequestComment Model
     """
@@ -1149,19 +1149,19 @@ class ShiftRequestComment(HorillaModel):
         return f"{self.comment}"
 
 
-class Tags(HorillaModel):
+class Tags(SleektivModel):
     title = models.CharField(max_length=30)
     color = models.CharField(max_length=30)
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = SleektivCompanyManager(related_company_field="company_id")
 
     def __str__(self):
         return self.title
 
 
-class HorillaMailTemplate(HorillaModel):
+class SleektivMailTemplate(SleektivModel):
     title = models.CharField(max_length=100, unique=True)
     body = models.TextField()
     company_id = models.ForeignKey(
@@ -1171,13 +1171,13 @@ class HorillaMailTemplate(HorillaModel):
         on_delete=models.CASCADE,
         verbose_name=_("Company"),
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = SleektivCompanyManager(related_company_field="company_id")
 
     def __str__(self) -> str:
         return f"{self.title}"
 
 
-class DynamicEmailConfiguration(HorillaModel):
+class DynamicEmailConfiguration(SleektivModel):
     """
     SingletonModel to keep the mail server configurations
     """
@@ -1281,7 +1281,7 @@ CONDITION_CHOICE = [
 ]
 
 
-class MultipleApprovalCondition(HorillaModel):
+class MultipleApprovalCondition(SleektivModel):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     condition_field = models.CharField(
         max_length=255,
@@ -1493,7 +1493,7 @@ class AnnouncementExpire(models.Model):
     objects = models.Manager()
 
 
-class Announcement(HorillaModel):
+class Announcement(SleektivModel):
     """
     Announcement Model for storing all announcements.
     """
@@ -1530,7 +1530,7 @@ class Announcement(HorillaModel):
     filtered_employees = models.ManyToManyField(
         Employee, related_name="announcement_filtered_employees", editable=False
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = SleektivCompanyManager(related_company_field="company_id")
 
     class Meta:
         verbose_name = _("Announcement")
@@ -1564,7 +1564,7 @@ class Announcement(HorillaModel):
         return self.title
 
 
-class AnnouncementComment(HorillaModel):
+class AnnouncementComment(SleektivModel):
     """
     AnnouncementComment Model
     """
@@ -1627,7 +1627,7 @@ class DriverViewed(models.Model):
         return self.user.driverviewed_set.values_list("viewed", flat=True)
 
 
-class DashboardEmployeeCharts(HorillaModel):
+class DashboardEmployeeCharts(SleektivModel):
     from employee.models import Employee
 
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -1686,7 +1686,7 @@ class AttendanceAllowedIP(models.Model):
         return f"AttendanceAllowedIP - {self.is_enabled}"
 
 
-class TrackLateComeEarlyOut(HorillaModel):
+class TrackLateComeEarlyOut(SleektivModel):
     is_enable = models.BooleanField(
         default=True,
         verbose_name=_("Enable"),
@@ -1704,7 +1704,7 @@ class TrackLateComeEarlyOut(HorillaModel):
         return f"Tracking late come early out {tracking}"
 
 
-class Holidays(HorillaModel):
+class Holidays(SleektivModel):
     name = models.CharField(max_length=30, null=False, verbose_name=_("Name"))
     start_date = models.DateField(verbose_name=_("Start Date"))
     end_date = models.DateField(null=True, blank=True, verbose_name=_("End Date"))
@@ -1715,7 +1715,7 @@ class Holidays(HorillaModel):
         on_delete=models.PROTECT,
         verbose_name=_("Company"),
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = SleektivCompanyManager(related_company_field="company_id")
 
     def __str__(self):
         return self.name
@@ -1735,13 +1735,13 @@ class Holidays(HorillaModel):
         return Holidays.objects.filter(start_date__lte=today, end_date__gte=today)
 
 
-class CompanyLeaves(HorillaModel):
+class CompanyLeaves(SleektivModel):
     based_on_week = models.CharField(
         max_length=100, choices=WEEKS, blank=True, null=True
     )
     based_on_week_day = models.CharField(max_length=100, choices=WEEK_DAYS)
     company_id = models.ForeignKey(Company, null=True, on_delete=models.PROTECT)
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
     class Meta:
         unique_together = ("based_on_week", "based_on_week_day")
@@ -1750,7 +1750,7 @@ class CompanyLeaves(HorillaModel):
         return f"{dict(WEEK_DAYS).get(self.based_on_week_day)} | {dict(WEEKS).get(self.based_on_week)}"
 
 
-class PenaltyAccounts(HorillaModel):
+class PenaltyAccounts(SleektivModel):
     """
     LateComeEarlyOutPenaltyAccount
     """

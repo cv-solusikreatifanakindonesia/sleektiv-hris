@@ -51,7 +51,7 @@ from base.models import (
     EmployeeShiftSchedule,
     EmployeeType,
     Holidays,
-    HorillaMailTemplate,
+    SleektivMailTemplate,
     JobPosition,
     JobRole,
     MultipleApprovalCondition,
@@ -75,8 +75,8 @@ from sleektiv import sleektiv_middlewares
 from sleektiv.sleektiv_middlewares import _thread_locals
 from sleektiv.methods import get_sleektiv_model_class
 from sleektiv_audit.models import AuditTag
-from sleektiv_widgets.widgets.sleektiv_multi_select_field import HorillaMultiSelectField
-from sleektiv_widgets.widgets.select_widgets import HorillaMultiSelectWidget
+from sleektiv_widgets.widgets.sleektiv_multi_select_field import SleektivMultiSelectField
+from sleektiv_widgets.widgets.select_widgets import SleektivMultiSelectWidget
 
 # your form here
 
@@ -390,9 +390,9 @@ class AssignPermission(Form):
     Forms to assign user permision
     """
 
-    employee = HorillaMultiSelectField(
+    employee = SleektivMultiSelectField(
         queryset=Employee.objects.all(),
-        widget=HorillaMultiSelectWidget(
+        widget=SleektivMultiSelectWidget(
             filter_route_name="employee-widget-filter",
             filter_class=EmployeeFilter,
             filter_instance_contex_name="f",
@@ -506,7 +506,7 @@ class JobPositionMultiForm(ModelForm):
     JobPosition model's form
     """
 
-    department_id = HorillaMultiSelectField(
+    department_id = SleektivMultiSelectField(
         queryset=Department.objects.all(),
         label=JobPosition._meta.get_field("department_id").verbose_name,
         widget=forms.SelectMultiple(
@@ -744,9 +744,9 @@ class RotatingWorkTypeAssignForm(ModelForm):
     RotatingWorkTypeAssign model's form
     """
 
-    employee_id = HorillaMultiSelectField(
+    employee_id = SleektivMultiSelectField(
         queryset=Employee.objects.filter(employee_work_info__isnull=False),
-        widget=HorillaMultiSelectWidget(
+        widget=SleektivMultiSelectWidget(
             filter_route_name="employee-widget-filter",
             filter_class=EmployeeFilter,
             filter_instance_contex_name="f",
@@ -1391,9 +1391,9 @@ class RotatingShiftAssignForm(forms.ModelForm):
     RotatingShiftAssign model's form
     """
 
-    employee_id = HorillaMultiSelectField(
+    employee_id = SleektivMultiSelectField(
         queryset=Employee.objects.filter(employee_work_info__isnull=False),
-        widget=HorillaMultiSelectWidget(
+        widget=SleektivMultiSelectWidget(
             filter_route_name="employee-widget-filter",
             filter_class=EmployeeFilter,
             filter_instance_contex_name="f",
@@ -2218,7 +2218,7 @@ class MailTemplateForm(ModelForm):
     """
 
     class Meta:
-        model = HorillaMailTemplate
+        model = SleektivMailTemplate
         fields = "__all__"
         widgets = {
             "body": forms.Textarea(
@@ -2352,9 +2352,9 @@ class AnnouncementForm(ModelForm):
     Announcement Form
     """
 
-    employees = HorillaMultiSelectField(
+    employees = SleektivMultiSelectField(
         queryset=Employee.objects.all(),
-        widget=HorillaMultiSelectWidget(
+        widget=SleektivMultiSelectWidget(
             filter_route_name="employee-widget-filter",
             filter_class=EmployeeFilter,
             filter_instance_contex_name="f",
@@ -2419,7 +2419,7 @@ class AnnouncementForm(ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        if isinstance(self.fields["employees"], HorillaMultiSelectField):
+        if isinstance(self.fields["employees"], SleektivMultiSelectField):
             self.errors.pop("employees", None)
 
             employee_data = self.fields["employees"].queryset.filter(

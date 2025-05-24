@@ -19,7 +19,7 @@ from django.utils.translation import gettext_lazy as _
 
 from employee.models import Employee
 from sleektiv.sleektiv_middlewares import _thread_locals
-from sleektiv.models import HorillaModel
+from sleektiv.models import SleektivModel
 from sleektiv_views.cbv_methods import render_template
 
 # Create your models here.
@@ -44,7 +44,7 @@ def validate_time_format(value):
         raise ValidationError(_("Invalid format")) from error
 
 
-class Project(HorillaModel):
+class Project(SleektivModel):
     PROJECT_STATUS = [
         ("new", "New"),
         ("in_progress", "In Progress"),
@@ -248,7 +248,7 @@ class Project(HorillaModel):
         verbose_name_plural = _("Projects")
 
 
-class ProjectStage(HorillaModel):
+class ProjectStage(SleektivModel):
     """
     ProjectStage model
     """
@@ -314,7 +314,7 @@ class ProjectStage(HorillaModel):
         verbose_name_plural = _("Project Stages")
 
 
-class Task(HorillaModel):
+class Task(SleektivModel):
     """
     Task model
     """
@@ -512,7 +512,7 @@ class Task(HorillaModel):
         return f"'{url_with_params}'" + "," + f"'{message}'"
 
 
-class TimeSheet(HorillaModel):
+class TimeSheet(SleektivModel):
     """
     TimeSheet model
     """

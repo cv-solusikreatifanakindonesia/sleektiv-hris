@@ -3,7 +3,7 @@ from django.apps import AppConfig
 from sleektiv_automations.signals import start_automation
 
 
-class HorillaAutomationConfig(AppConfig):
+class SleektivAutomationConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "sleektiv_automations"
 

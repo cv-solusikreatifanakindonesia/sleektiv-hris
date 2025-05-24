@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
 from sleektiv_views.cbv_methods import login_required
-from sleektiv_views.generic.cbv.views import HorillaFormView
+from sleektiv_views.generic.cbv.views import SleektivFormView
 
 # from project.decorator import project_delete_permission
 from project.forms import ProjectStageForm
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 @method_decorator(login_required, name="dispatch")
 # @method_decorator(project_delete_permission, name="dispatch")
-class ProjectStageCreateForm(HorillaFormView):
+class ProjectStageCreateForm(SleektivFormView):
     """
     form view fro create and edit stages
     """
@@ -93,7 +93,7 @@ class StageDynamicCreateForm(ProjectStageCreateForm):
     """
 
     is_dynamic_create_view = True
-    template_name = HorillaFormView.template_name
+    template_name = SleektivFormView.template_name
 
     def get_initial(self):
         initial = super().get_initial()

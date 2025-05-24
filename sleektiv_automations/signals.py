@@ -43,7 +43,7 @@ def start_automation():
     """
     Automation signals
     """
-    from base.models import HorillaMailTemplate
+    from base.models import SleektivMailTemplate
     from sleektiv_automations.methods.methods import get_model_class, split_query_string
     from sleektiv_automations.models import MailAutomation
 
@@ -56,8 +56,8 @@ def start_automation():
         start_connection()
         track_previous_instance()
 
-    @receiver(post_delete, sender=HorillaMailTemplate)
-    @receiver(post_save, sender=HorillaMailTemplate)
+    @receiver(post_delete, sender=SleektivMailTemplate)
+    @receiver(post_save, sender=SleektivMailTemplate)
     def template_signal(sender, instance, **kwargs):
         """
         signal method to handle automation post save

@@ -9,13 +9,13 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from base.sleektiv_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import SleektivCompanyManager
 from base.models import Company
 from employee.models import Employee
-from sleektiv.models import HorillaModel
+from sleektiv.models import SleektivModel
 
 
-class AssetCategory(HorillaModel):
+class AssetCategory(SleektivModel):
     """
     Represents a category for different types of assets.
     """
@@ -28,7 +28,7 @@ class AssetCategory(HorillaModel):
     )
     objects = models.Manager()
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
-    objects = HorillaCompanyManager("company_id")
+    objects = SleektivCompanyManager("company_id")
 
     class Meta:
         """
@@ -42,7 +42,7 @@ class AssetCategory(HorillaModel):
         return f"{self.asset_category_name}"
 
 
-class AssetLot(HorillaModel):
+class AssetLot(SleektivModel):
     """
     Represents a lot associated with a collection of assets.
     """
@@ -58,7 +58,7 @@ class AssetLot(HorillaModel):
         null=True, blank=True, max_length=255, verbose_name=_("Description")
     )
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
     class Meta:
         """
@@ -73,7 +73,7 @@ class AssetLot(HorillaModel):
         return f"{self.lot_number}"
 
 
-class Asset(HorillaModel):
+class Asset(SleektivModel):
     """
     Represents a asset with various attributes.
     """
@@ -121,7 +121,7 @@ class Asset(HorillaModel):
     notify_before = models.IntegerField(
         default=1, null=True, verbose_name=_("Notify Before (days)")
     )
-    objects = HorillaCompanyManager("asset_category_id__company_id")
+    objects = SleektivCompanyManager("asset_category_id__company_id")
 
     class Meta:
         ordering = ["-created_at"]
@@ -148,7 +148,7 @@ class Asset(HorillaModel):
         return super().clean()
 
 
-class AssetReport(HorillaModel):
+class AssetReport(SleektivModel):
     """
     Model representing a report for an asset.
 
@@ -175,7 +175,7 @@ class AssetReport(HorillaModel):
         )
 
 
-class AssetDocuments(HorillaModel):
+class AssetDocuments(SleektivModel):
     """
     Model representing documents associated with an asset report.
 
@@ -197,7 +197,7 @@ class AssetDocuments(HorillaModel):
         return f"document for {self.asset_report}"
 
 
-class ReturnImages(HorillaModel):
+class ReturnImages(SleektivModel):
     """
     Model representing images associated with a returned asset.
 
@@ -208,7 +208,7 @@ class ReturnImages(HorillaModel):
     image = models.FileField(upload_to="asset/return_images/", blank=True, null=True)
 
 
-class AssetAssignment(HorillaModel):
+class AssetAssignment(SleektivModel):
     """
     Represents the allocation and return of assets to and from employees.
     """
@@ -246,7 +246,7 @@ class AssetAssignment(HorillaModel):
         verbose_name=_("Return Status"),
     )
     return_request = models.BooleanField(default=False)
-    objects = HorillaCompanyManager("asset_id__asset_lot_number_id__company_id")
+    objects = SleektivCompanyManager("asset_id__asset_lot_number_id__company_id")
     return_images = models.ManyToManyField(
         ReturnImages, blank=True, related_name="return_images"
     )
@@ -256,7 +256,7 @@ class AssetAssignment(HorillaModel):
         related_name="assign_images",
         verbose_name=_("Assign Condition Images"),
     )
-    objects = HorillaCompanyManager(
+    objects = SleektivCompanyManager(
         "assigned_to_employee_id__employee_work_info__company_id"
     )
 
@@ -271,7 +271,7 @@ class AssetAssignment(HorillaModel):
         return f"{self.assigned_to_employee_id} --- {self.asset_id} --- {self.return_status}"
 
 
-class AssetRequest(HorillaModel):
+class AssetRequest(SleektivModel):
     """
     Represents a request for assets made by employees.
     """
@@ -299,7 +299,7 @@ class AssetRequest(HorillaModel):
     asset_request_status = models.CharField(
         max_length=30, choices=STATUS, default="Requested", null=True, blank=True
     )
-    objects = HorillaCompanyManager(
+    objects = SleektivCompanyManager(
         "requested_employee_id__employee_work_info__company_id"
     )
 

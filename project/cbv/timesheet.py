@@ -16,11 +16,11 @@ from django.utils.translation import gettext_lazy as _
 from employee.models import Employee
 from sleektiv_views.cbv_methods import login_required
 from sleektiv_views.generic.cbv.views import (
-    HorillaCardView,
-    HorillaDetailedView,
-    HorillaFormView,
-    HorillaListView,
-    HorillaNavView,
+    SleektivCardView,
+    SleektivDetailedView,
+    SleektivFormView,
+    SleektivListView,
+    SleektivNavView,
     TemplateView,
 )
 from project.cbv.cbv_decorators import is_projectmanager_or_member_or_perms
@@ -47,7 +47,7 @@ class TimeSheetView(TemplateView):
 @method_decorator(
     is_projectmanager_or_member_or_perms("project.view_timesheet"), name="dispatch"
 )
-class TimeSheetNavView(HorillaNavView):
+class TimeSheetNavView(SleektivNavView):
     """
     Nav bar
     """
@@ -131,7 +131,7 @@ class TimeSheetNavView(HorillaNavView):
 @method_decorator(
     is_projectmanager_or_member_or_perms("project.view_timesheet"), name="dispatch"
 )
-class TimeSheetList(HorillaListView):
+class TimeSheetList(SleektivListView):
     """
     Time sheet list view
     """
@@ -240,7 +240,7 @@ class TaskTimeSheet(TimeSheetList):
     template_name = "cbv/timesheet/task_timesheet.html"
 
     def get_queryset(self):
-        queryset = HorillaListView.get_queryset(self)
+        queryset = SleektivListView.get_queryset(self)
         task_id = self.kwargs.get("task_id")
         task = Task.objects.filter(id=task_id).first()
         queryset = TimeSheet.objects.filter(task_id=task_id)
@@ -262,7 +262,7 @@ class TaskTimeSheet(TimeSheetList):
 @method_decorator(
     is_projectmanager_or_member_or_perms("project.view_timesheet"), name="dispatch"
 )
-class TimeSheetFormView(HorillaFormView):
+class TimeSheetFormView(SleektivFormView):
     """
     form view for create project
     """
@@ -383,7 +383,7 @@ class TimeSheetFormView(HorillaFormView):
 @method_decorator(
     is_projectmanager_or_member_or_perms("project.view_timesheet"), name="dispatch"
 )
-class TimeSheetCardView(HorillaCardView):
+class TimeSheetCardView(SleektivCardView):
     """
     For card view
     """
@@ -473,7 +473,7 @@ class TimeSheetCardView(HorillaCardView):
 @method_decorator(
     is_projectmanager_or_member_or_perms("project.view_timesheet"), name="dispatch"
 )
-class TimeSheetDetailView(HorillaDetailedView):
+class TimeSheetDetailView(SleektivDetailedView):
     """
     detail view of the page
     """

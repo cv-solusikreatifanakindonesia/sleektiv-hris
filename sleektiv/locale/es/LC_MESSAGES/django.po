@@ -12875,7 +12875,7 @@ msgid "{} not found."
 msgstr "{} extraviado."
 
 #: .\base\views.py:1419
-msgid "Test mail from Horilla"
+msgid "Test mail from Sleektiv"
 msgstr ""
 
 #: .\base\views.py:1476

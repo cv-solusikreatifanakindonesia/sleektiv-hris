@@ -627,7 +627,7 @@ msgstr "預設可訪問性"
 
 #: accessibility/templates/accessibility/accessibility.html:11
 msgid "Limit default view access to sleektiv feature"
-msgstr "限制預設檢視存取至 Horilla 功能"
+msgstr "限制預設檢視存取至 Sleektiv 功能"
 
 #: accessibility/templates/accessibility/accessibility.html:31
 #: asset/templates/asset/asset_list.html:31
@@ -8539,7 +8539,7 @@ msgstr "自动签退时间"
 msgid ""
 "Time at which the sleektiv will automatically check out the employee "
 "attendance if they forget."
-msgstr "如果员工忘记签退，Horilla 将在此时间自动签退其考勤。"
+msgstr "如果员工忘记签退，Sleektiv 将在此时间自动签退其考勤。"
 
 #: base/models.py:613 templates/settings.html:300
 msgid "Employee Shift Schedule"
@@ -12023,7 +12023,7 @@ msgstr "部门"
 msgid "job_position"
 msgstr ""
 "职位\n"
-"这些翻译保持了专业性和准确性，适用于企业级人力资源管理系统（Horilla HRM）的上下文。每个术语都遵循了指定的翻译要求，确保了在中文商业环境中的适用性和清晰度。"
+"这些翻译保持了专业性和准确性，适用于企业级人力资源管理系统（Sleektiv HRM）的上下文。每个术语都遵循了指定的翻译要求，确保了在中文商业环境中的适用性和清晰度。"
 
 #: base/translator.py:296
 msgid "job_role"
@@ -12295,8 +12295,8 @@ msgid "{} not found."
 msgstr "未找到 {}。"
 
 #: base/views.py:1413
-msgid "Test mail from Horilla"
-msgstr "来自 Horilla 的测试邮件"
+msgid "Test mail from Sleektiv"
+msgstr "来自 Sleektiv 的测试邮件"
 
 #: base/views.py:1470
 msgid "Something went wrong :"

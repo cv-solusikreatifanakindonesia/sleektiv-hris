@@ -18,7 +18,7 @@ from sleektiv.signals import post_generic_delete, pre_generic_delete
 from sleektiv_views import models
 from sleektiv_views.cbv_methods import get_short_uuid, login_required, merge_dicts
 from sleektiv_views.forms import SavedFilterForm
-from sleektiv_views.generic.cbv.views import HorillaFormView, HorillaListView
+from sleektiv_views.generic.cbv.views import SleektivFormView, SleektivListView
 
 # Create your views here.
 
@@ -78,7 +78,7 @@ class ReloadField(View):
         if not onchange:
             onchange = ""
 
-        model: models.HorillaModel = dynamic_cache["model"]
+        model: models.SleektivModel = dynamic_cache["model"]
         value = dynamic_cache.get("value", "")
 
         cache_field = dynamic_cache["dynamic_field"]
@@ -171,7 +171,7 @@ class ActiveGroup(View):
 
 
 @method_decorator(login_required, name="dispatch")
-class SavedFilter(HorillaFormView):
+class SavedFilter(SleektivFormView):
     """
     SavedFilter
     """
@@ -281,7 +281,7 @@ class LastAppliedFilter(View):
         return HttpResponse("success")
 
 
-class DynamiListView(HorillaListView):
+class DynamiListView(SleektivListView):
     """
     DynamicListView for Generic Delete
     """
@@ -297,7 +297,7 @@ class DynamiListView(HorillaListView):
         return filter(_search_filter, self.instances)
 
 
-class HorillaDeleteConfirmationView(View):
+class SleektivDeleteConfirmationView(View):
     """
     Generic Delete Confirmation View
     """
@@ -369,7 +369,7 @@ class HorillaDeleteConfirmationView(View):
                     f"{get_short_uuid(prefix='generic-delete',length=10)}"
                 )
 
-                class DynamiListView(HorillaListView):
+                class DynamiListView(SleektivListView):
                     """
                     DynamicListView for Generic Delete
                     """
@@ -586,7 +586,7 @@ class HorillaDeleteConfirmationView(View):
         # deleting related objects
         collector.nested(delete_callback)
 
-        return HorillaFormView.HttpResponse()
+        return SleektivFormView.HttpResponse()
 
     def get_context_data(self, **kwargs) -> dict:
         context = {}

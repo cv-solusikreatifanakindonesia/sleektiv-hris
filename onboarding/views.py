@@ -42,7 +42,7 @@ from base.methods import (
     get_pagination,
     sortby,
 )
-from base.models import HorillaMailTemplate, JobPosition
+from base.models import SleektivMailTemplate, JobPosition
 from employee.models import Employee, EmployeeBankDetails, EmployeeWorkInformation
 from sleektiv import settings
 from sleektiv.decorators import (
@@ -558,7 +558,7 @@ def candidates_view(request):
     previous_data = request.GET.urlencode()
     page_number = request.GET.get("page")
     page_obj = paginator_qry(candidate_filter_obj.qs, page_number)
-    mail_templates = HorillaMailTemplate.objects.all()
+    mail_templates = SleektivMailTemplate.objects.all()
     data_dict = parse_qs(previous_data)
     get_key_instances(Candidate, data_dict)
     return render(
@@ -659,7 +659,7 @@ def email_send(request):
         return HttpResponse("<script>window.location.reload()</script>")
 
     bodys = list(
-        HorillaMailTemplate.objects.filter(id__in=template_attachment_ids).values_list(
+        SleektivMailTemplate.objects.filter(id__in=template_attachment_ids).values_list(
             "body", flat=True
         )
     )

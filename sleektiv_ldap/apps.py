@@ -4,7 +4,7 @@ from django.conf import settings
 import sleektiv.sleektiv_settings
 
 
-class HorillaLdapConfig(AppConfig):
+class SleektivLdapConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "sleektiv_ldap"
 

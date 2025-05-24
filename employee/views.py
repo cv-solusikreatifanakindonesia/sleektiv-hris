@@ -115,7 +115,7 @@ from sleektiv.decorators import (
     owner_can_enter,
     permission_required,
 )
-from sleektiv.filters import HorillaPaginator
+from sleektiv.filters import SleektivPaginator
 from sleektiv.group_by import group_by_queryset
 from sleektiv.sleektiv_settings import SLEEKTIV_DATE_FORMATS
 from sleektiv.methods import get_sleektiv_model_class
@@ -955,7 +955,7 @@ def paginator_qry(qryset, page_number):
     """
     This method is used to paginate query set
     """
-    paginator = HorillaPaginator(qryset, get_pagination())
+    paginator = SleektivPaginator(qryset, get_pagination())
     qryset = paginator.get_page(page_number)
     return qryset
 

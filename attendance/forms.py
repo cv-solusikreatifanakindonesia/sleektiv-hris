@@ -65,8 +65,8 @@ from base.models import Company, EmployeeShift
 from employee.filters import EmployeeFilter
 from employee.models import Employee
 from sleektiv import sleektiv_middlewares
-from sleektiv_widgets.widgets.sleektiv_multi_select_field import HorillaMultiSelectField
-from sleektiv_widgets.widgets.select_widgets import HorillaMultiSelectWidget
+from sleektiv_widgets.widgets.sleektiv_multi_select_field import SleektivMultiSelectField
+from sleektiv_widgets.widgets.select_widgets import SleektivMultiSelectWidget
 
 logger = logging.getLogger(__name__)
 
@@ -202,9 +202,9 @@ class AttendanceForm(BaseModelForm):
     Model form for Attendance model
     """
 
-    employee_id = HorillaMultiSelectField(
+    employee_id = SleektivMultiSelectField(
         queryset=Employee.objects.filter(employee_work_info__isnull=False),
-        widget=HorillaMultiSelectWidget(
+        widget=SleektivMultiSelectWidget(
             filter_route_name="employee-widget-filter",
             filter_class=EmployeeFilter,
             filter_instance_contex_name="f",

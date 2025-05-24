@@ -4,12 +4,12 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from sleektiv.sleektiv_middlewares import _thread_locals
-from sleektiv.models import HorillaModel
+from sleektiv.models import SleektivModel
 
 # Create your models here.
 
 
-class ToggleColumn(HorillaModel):
+class ToggleColumn(SleektivModel):
     """
     ToggleColumn
     """
@@ -33,7 +33,7 @@ class ToggleColumn(HorillaModel):
         return str(self.user_id.employee_get)
 
 
-class ActiveTab(HorillaModel):
+class ActiveTab(SleektivModel):
     """
     ActiveTab
     """
@@ -42,7 +42,7 @@ class ActiveTab(HorillaModel):
     tab_target = models.CharField(max_length=256)
 
 
-class ActiveGroup(HorillaModel):
+class ActiveGroup(SleektivModel):
     """
     ActiveGroup
     """
@@ -52,7 +52,7 @@ class ActiveGroup(HorillaModel):
     group_by_field = models.CharField(max_length=256)
 
 
-class SavedFilter(HorillaModel):
+class SavedFilter(SleektivModel):
     """
     SavedFilter
     """
@@ -75,7 +75,7 @@ class SavedFilter(HorillaModel):
         return str(self.title)
 
 
-class ActiveView(HorillaModel):
+class ActiveView(SleektivModel):
     """
     This model to store the active view type for HNV
     """

@@ -12,10 +12,10 @@ from django.core.validators import MaxValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from base.sleektiv_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import SleektivCompanyManager
 from base.models import Company
 from employee.models import Employee
-from sleektiv.models import HorillaModel
+from sleektiv.models import SleektivModel
 
 
 def validate_schedule_time_format(value):
@@ -36,7 +36,7 @@ def validate_schedule_time_format(value):
         raise ValidationError(_("Invalid format, it should be HH:MM format")) from error
 
 
-class BiometricDevices(HorillaModel):
+class BiometricDevices(SleektivModel):
     """
     Model: BiometricDevices
 
@@ -104,7 +104,7 @@ class BiometricDevices(HorillaModel):
         verbose_name=_("Company"),
     )
 
-    objects = HorillaCompanyManager()
+    objects = SleektivCompanyManager()
 
     def __str__(self):
         return f"{self.name} - {self.machine_type}"

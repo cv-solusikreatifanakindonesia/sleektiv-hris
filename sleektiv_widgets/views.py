@@ -3,7 +3,7 @@ from django.shortcuts import render
 from sleektiv.decorators import login_required
 from sleektiv_widgets.widgets.select_widgets import (
     ALL_INSTANCES,
-    HorillaMultiSelectWidget,
+    SleektivMultiSelectWidget,
 )
 
 # Create your views here.

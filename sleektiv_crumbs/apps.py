@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class HorillaCrumbsConfig(AppConfig):
+class SleektivCrumbsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "sleektiv_crumbs"

@@ -7,12 +7,12 @@ from django.db.models.signals import post_delete, post_save
 from django.forms import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from base.sleektiv_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import SleektivCompanyManager
 from base.models import Company, Department, JobPosition, Tags
 from employee.models import Employee
-from sleektiv.models import HorillaModel
+from sleektiv.models import SleektivModel
 from sleektiv_audit.methods import get_diff
-from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
+from sleektiv_audit.models import SleektivAuditInfo, SleektivAuditLog
 
 PRIORITY = [
     ("low", "Low"),
@@ -43,7 +43,7 @@ TICKET_STATUS = [
 ]
 
 
-class DepartmentManager(HorillaModel):
+class DepartmentManager(SleektivModel):
     manager = models.ForeignKey(
         Employee,
         verbose_name=_("Manager"),
@@ -59,7 +59,7 @@ class DepartmentManager(HorillaModel):
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager("manager__employee_work_info__company_id")
+    objects = SleektivCompanyManager("manager__employee_work_info__company_id")
 
     class Meta:
         unique_together = ("department", "manager")
@@ -72,14 +72,14 @@ class DepartmentManager(HorillaModel):
             raise ValidationError(_(f"This employee is not from {self.department} ."))
 
 
-class TicketType(HorillaModel):
+class TicketType(SleektivModel):
     title = models.CharField(max_length=100, unique=True, verbose_name=_("Title"))
     type = models.CharField(choices=TICKET_TYPES, max_length=50, verbose_name=_("Type"))
     prefix = models.CharField(max_length=3, unique=True, verbose_name=_("Prefix"))
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = SleektivCompanyManager(related_company_field="company_id")
 
     def __str__(self):
         return self.title
@@ -89,7 +89,7 @@ class TicketType(HorillaModel):
         verbose_name_plural = _("Ticket Types")
 
 
-class Ticket(HorillaModel):
+class Ticket(SleektivModel):
 
     title = models.CharField(max_length=50)
     employee_id = models.ForeignKey(
@@ -114,13 +114,13 @@ class Ticket(HorillaModel):
     deadline = models.DateField(null=True, blank=True)
     tags = models.ManyToManyField(Tags, blank=True, related_name="ticket_tags")
     status = models.CharField(choices=TICKET_STATUS, default="new", max_length=50)
-    history = HorillaAuditLog(
+    history = SleektivAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            SleektivAuditInfo,
         ],
     )
-    objects = HorillaCompanyManager(
+    objects = SleektivCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
 
@@ -166,7 +166,7 @@ class Ticket(HorillaModel):
         return get_diff(self)
 
 
-class ClaimRequest(HorillaModel):
+class ClaimRequest(SleektivModel):
     ticket_id = models.ForeignKey(
         Ticket,
         on_delete=models.CASCADE,
@@ -196,7 +196,7 @@ class ClaimRequest(HorillaModel):
             raise ValidationError({"employee_id": _("This field is required.")})
 
 
-class Comment(HorillaModel):
+class Comment(SleektivModel):
     comment = models.TextField(null=True, blank=True)
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="comment")
     employee_id = models.ForeignKey(
@@ -208,7 +208,7 @@ class Comment(HorillaModel):
         return self.comment
 
 
-class Attachment(HorillaModel):
+class Attachment(SleektivModel):
     file = models.FileField(upload_to="Tickets/Attachment")
     description = models.CharField(max_length=100, blank=True, null=True)
     format = models.CharField(max_length=50, blank=True, null=True)
@@ -247,7 +247,7 @@ class Attachment(HorillaModel):
         return os.path.basename(self.file.name)
 
 
-class FAQCategory(HorillaModel):
+class FAQCategory(SleektivModel):
     title = models.CharField(max_length=30)
     description = models.TextField(blank=True, null=True, max_length=255)
 
@@ -259,7 +259,7 @@ class FAQCategory(HorillaModel):
         verbose_name_plural = _("FAQ Categories")
 
 
-class FAQ(HorillaModel):
+class FAQ(SleektivModel):
     question = models.CharField(max_length=255)
     answer = models.TextField(max_length=255)
     tags = models.ManyToManyField(Tags)
@@ -267,7 +267,7 @@ class FAQ(HorillaModel):
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = SleektivCompanyManager(related_company_field="company_id")
 
     def __str__(self):
         return self.question

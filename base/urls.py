@@ -20,7 +20,7 @@ from base.models import (
     EmployeeShiftSchedule,
     EmployeeType,
     Holidays,
-    HorillaMailTemplate,
+    SleektivMailTemplate,
     JobPosition,
     JobRole,
     RotatingShift,
@@ -82,7 +82,7 @@ urlpatterns = [
     path("login/", views.login_user, name="login"),
     path(
         "forgot-password",
-        views.HorillaPasswordResetView.as_view(),
+        views.SleektivPasswordResetView.as_view(),
         name="forgot-password",
     ),
     path(
@@ -182,7 +182,7 @@ urlpatterns = [
         views.object_duplicate,
         name="duplicate-mail-template",
         kwargs={
-            "model": HorillaMailTemplate,
+            "model": SleektivMailTemplate,
             "form": MailTemplateForm,
             "template": "mail/htmx/form.html",
         },

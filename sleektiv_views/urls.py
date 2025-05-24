@@ -42,12 +42,12 @@ urlpatterns = [
     ),
     path(
         "generic-delete",
-        views.HorillaDeleteConfirmationView.as_view(),
+        views.SleektivDeleteConfirmationView.as_view(),
         name="generic-delete",
     ),
     path(
         "sleektiv-history-revert/<int:pk>/<int:history_id>/",
-        history.HorillaHistoryView.as_view(),
+        history.SleektivHistoryView.as_view(),
         name="history-revert",
     ),
 ]

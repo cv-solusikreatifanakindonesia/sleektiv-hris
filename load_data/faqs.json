@@ -511,7 +511,7 @@
       "created_by": null,
       "modified_by": 1,
       "is_active": true,
-      "question": "How can I create a new recruitment in Horilla?",
+      "question": "How can I create a new recruitment in Sleektiv?",
       "answer": "To create a new recruitment, click on the '+ Create' button from Recruitment > Recruitments , specify the job position, description, vacancies, managers, start and end dates, and select a recruitment survey.",
       "category": 5,
       "company_id": null
@@ -651,7 +651,7 @@
       "created_by": null,
       "modified_by": 1,
       "is_active": true,
-      "question": "How does Contract Management work in Horilla?",
+      "question": "How does Contract Management work in Sleektiv?",
       "answer": "Contract Management allows users to create contracts, define compensation, set contract duration, and manage leave settings. It supports various wage types for customized work arrangements.",
       "category": 6,
       "company_id": null
@@ -679,7 +679,7 @@
       "created_by": null,
       "modified_by": 1,
       "is_active": true,
-      "question": "How are deductions managed in Horilla?",
+      "question": "How are deductions managed in Sleektiv?",
       "answer": "The Deduction Management feature allows users to create and personalize deductions, set eligibility conditions, and choose fixed or variable amounts. It ensures streamlined deductions and fair practices.",
       "category": 6,
       "company_id": null
@@ -735,7 +735,7 @@
       "created_by": null,
       "modified_by": 1,
       "is_active": true,
-      "question": "How are payslips generated in Horilla?",
+      "question": "How are payslips generated in Sleektiv?",
       "answer": "The Payslip Generation feature calculates salaries, including allowances, deductions, and taxes, and creates accurate and detailed payslips for each pay period.",
       "category": 6,
       "company_id": null

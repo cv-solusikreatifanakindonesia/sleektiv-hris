@@ -3,12 +3,12 @@ from django import forms
 from django.db.models import Q
 from django.utils.translation import gettext as _
 
-from sleektiv.filters import FilterSet, HorillaFilterSet, filter_by_name
+from sleektiv.filters import FilterSet, SleektivFilterSet, filter_by_name
 
 from .models import Employee, Project, Task, TimeSheet
 
 
-class ProjectFilter(HorillaFilterSet):
+class ProjectFilter(SleektivFilterSet):
     search = django_filters.CharFilter(method="filter_by_project")
     search_field = django_filters.CharFilter(method="search_in")
 
@@ -71,7 +71,7 @@ class TaskFilter(FilterSet):
         return queryset
 
 
-class TaskAllFilter(HorillaFilterSet):
+class TaskAllFilter(SleektivFilterSet):
     search = django_filters.CharFilter(method="filter_by_task")
     end_till = django_filters.DateFilter(
         field_name="end_date",
@@ -96,7 +96,7 @@ class TaskAllFilter(HorillaFilterSet):
         return queryset
 
 
-class TimeSheetFilter(HorillaFilterSet):
+class TimeSheetFilter(SleektivFilterSet):
     """
     Filter set class for Timesheet model
     """

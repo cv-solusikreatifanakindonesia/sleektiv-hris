@@ -11,13 +11,13 @@ from django.db import models
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
-from base.sleektiv_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import SleektivCompanyManager
 from base.models import Company
-from sleektiv.models import HorillaModel
+from sleektiv.models import SleektivModel
 from payroll.models.models import FilingStatus
 
 
-class PayrollSettings(HorillaModel):
+class PayrollSettings(SleektivModel):
     """
     Payroll settings model
     """
@@ -33,13 +33,13 @@ class PayrollSettings(HorillaModel):
     )
 
     company_id = models.ForeignKey(Company, null=True, on_delete=models.PROTECT)
-    objects = HorillaCompanyManager("company_id")
+    objects = SleektivCompanyManager("company_id")
 
     def __str__(self):
         return f"Payroll Settings {self.currency_symbol}"
 
 
-class TaxBracket(HorillaModel):
+class TaxBracket(SleektivModel):
     """
     TaxBracket model
     """

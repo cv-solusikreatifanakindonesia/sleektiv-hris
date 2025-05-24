@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from attendance.models import *
-from base.models import HorillaMailTemplate
+from base.models import SleektivMailTemplate
 
 
 class AttendanceSerializer(serializers.ModelSerializer):
@@ -208,5 +208,5 @@ class AttendanceActivitySerializer(serializers.ModelSerializer):
 
 class MailTemplateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = HorillaMailTemplate
+        model = SleektivMailTemplate
         fields = "__all__"
