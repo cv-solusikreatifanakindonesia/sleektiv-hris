@@ -364,8 +364,8 @@ python manage.py runserver 8080   # For Windows
 
 ## **Credits**
 
-[Cybrosys Technologies](https://www.cybrosys.com/)
-[Horilla](https://www.sleektiv.com/)
+- [Cybrosys Technologies](https://www.cybrosys.com/)
+- [Horilla](https://www.horilla.com/)
 ---
 
 ## **About**
