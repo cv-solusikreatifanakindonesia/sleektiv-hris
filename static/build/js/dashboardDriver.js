@@ -26,7 +26,7 @@ if ($('#mainNavProfile').length) {
     steps.push({ element: '#mainNavProfile', popover: { title: 'Profile', description: 'Profile and change password options' } });
 }
 if ($('.oh-card-dashboard').length) {
-    steps.push({ element: '#tileContainer .oh-card-dashboard:nth-child(1)', popover: { title: 'Dashboard Tiles', description: 'Horilla Dashboard Tiles' } });
+    steps.push({ element: '#tileContainer .oh-card-dashboard:nth-child(1)', popover: { title: 'Dashboard Tiles', description: 'Sleektiv - HRIS Dashboard Tiles' } });
 }
 setTimeout(() => {
     if ($('.oh-btn-group').length) {
