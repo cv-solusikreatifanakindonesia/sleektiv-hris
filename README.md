@@ -1,14 +1,10 @@
-# **Horilla 🦍** [![LGPL License](https://img.shields.io/badge/license-LGPL-green.svg)](https://www.gnu.org/licenses/lgpl-3.0)  [![Docker](https://img.shields.io/badge/Docker-Horilla-blue?logo=docker)](https://hub.docker.com/r/horilla/horilla)
+# **Sleektiv - HRIS** [![LGPL License](https://img.shields.io/badge/license-LGPL-green.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
-**Horilla** is a Free and Open Source HRMS (Human Resource Management System) Software designed to streamline HR processes and enhance organizational efficiency.
-
-![Horilla Screenshot](https://github.com/horilla-opensource/horilla/assets/131998600/1317bd0a-03a8-40be-8fb2-ecb655bb5c13)
-
----
+**Sleektiv - HRIS** is a Open Source HRMS (Human Resource Management System) Software designed to streamline HR processes and enhance organizational efficiency.
 
 ## **Installation**
 
-Horilla can be installed on your system by following the steps below. Ensure you have **Python**, **Django**, and a **database** (preferably PostgreSQL) installed as prerequisites.
+Sleektiv - HRIS can be installed on your system by following the steps below. Ensure you have **Python**, **Django**, and a **database** (preferably PostgreSQL) installed as prerequisites.
 
 ---
 
@@ -83,8 +79,8 @@ Horilla can be installed on your system by following the steps below. Ensure you
      ```
    - Create a new role and database:
      ```sql
-     CREATE ROLE horilla LOGIN PASSWORD 'horilla';
-     CREATE DATABASE horilla_main OWNER horilla;
+     CREATE ROLE sleektiv LOGIN PASSWORD 'sleektiv';
+     CREATE DATABASE sleektiv_hr OWNER sleektiv;
      \q
      ```
    - Exit the `postgres` user:
@@ -113,8 +109,8 @@ Horilla can be installed on your system by following the steps below. Ensure you
      ```
    - Create a new role and database:
      ```sql
-     CREATE ROLE horilla LOGIN PASSWORD 'horilla';
-     CREATE DATABASE horilla_main OWNER horilla;
+     CREATE ROLE sleektiv LOGIN PASSWORD 'sleektiv';
+     CREATE DATABASE sleektiv_hr OWNER sleektiv;
      \q
      ```
 
@@ -139,16 +135,16 @@ Horilla can be installed on your system by following the steps below. Ensure you
 4. **Configure PostgreSQL Database and User**:
    - Create a database and user:
      ```bash
-     createdb horilla_main
-     createuser horilla
-     psql -c "ALTER USER horilla WITH PASSWORD 'horilla';"
+     createdb sleektiv_hr
+     createuser sleektiv
+     psql -c "ALTER USER sleektiv WITH PASSWORD 'sleektiv';"
      ```
 
 ---
 
-## **Install Horilla**
+## **Install Sleektiv - HRIS**
 
-Follow the steps below to install **Horilla** on your system. Horilla is compatible with **Ubuntu**, **Windows**, and **macOS**.
+Follow the steps below to install **Sleektiv - HRIS** on your system. Sleektiv - HRIS is compatible with **Ubuntu**, **Windows**, and **macOS**.
 
 ---
 
@@ -157,22 +153,22 @@ Follow the steps below to install **Horilla** on your system. Horilla is compati
 #### **Ubuntu**
 ```bash
 sudo git init
-sudo git remote add horilla https://horilla-opensource@github.com/horilla-opensource/horilla.git
-sudo git pull horilla master
+sudo git remote add sleektiv-hris https://github.com/cv-solusikreatifanakindonesia/sleektiv-hris.git
+sudo git pull sleektiv-hris master
 ```
 
 #### **Windows**
 ```powershell
 git init
-git remote add horilla https://horilla-opensource@github.com/horilla-opensource/horilla.git
-git pull horilla master
+git remote add sleektiv-hris https://github.com/cv-solusikreatifanakindonesia/sleektiv-hris.git
+git pull sleektiv-hris master
 ```
 
 #### **macOS**
 ```bash
 git init
-git remote add horilla https://horilla-opensource@github.com/horilla-opensource/horilla.git
-git pull horilla master
+git remote add sleektiv-hris https://github.com/cv-solusikreatifanakindonesia/sleektiv-hris.git
+git pull sleektiv-hris master
 ```
 
 ### **2. Set Up Python Virtual Environment**
@@ -184,8 +180,8 @@ git pull horilla master
    ```
 2. Create and activate the virtual environment:
    ```bash
-   python3 -m venv horillavenv
-   source horillavenv/bin/activate
+   python3 -m venv sleektiv_hris_venv
+   source sleektiv_hris_venv/bin/activate
    ```
 3. Install dependencies:
    ```bash
@@ -195,8 +191,8 @@ git pull horilla master
 #### **Windows**
 1. Create and activate the virtual environment:
    ```powershell
-   python -m venv horillavenv
-   .\horillavenv\Scripts\activate
+   python -m venv sleektiv_hris_venv
+   .\sleektiv_hris_venv\Scripts\activate
    ```
 2. Install dependencies:
    ```powershell
@@ -206,8 +202,8 @@ git pull horilla master
 #### **macOS**
 1. Create and activate the virtual environment:
    ```bash
-   python3 -m venv horillavenv
-   source horillavenv/bin/activate
+   python3 -m venv sleektiv_hris_venv
+   source sleektiv_hris_venv/bin/activate
    ```
 2. Install dependencies:
    ```bash
@@ -230,9 +226,9 @@ git pull horilla master
    ALLOWED_HOSTS=www.example.com,example.com,*
    DB_INIT_PASSWORD=d3f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d
    DB_ENGINE=django.db.backends.postgresql
-   DB_NAME=horilla_main
-   DB_USER=horilla
-   DB_PASSWORD=horilla
+   DB_NAME=sleektiv_hr
+   DB_USER=sleektiv
+   DB_PASSWORD=sleektiv
    DB_HOST=localhost
    DB_PORT=5432
    ```
@@ -290,19 +286,18 @@ python manage.py runserver
 
 ---
 
-### **Accessing Horilla**
+### **Accessing Sleektiv - HRIS**
 
-If everything is configured correctly, you should be able to access your Horilla app at **http://localhost:8000**.
-![Initialize Database in Horilla HRMS](https://www.horilla.com/wp-content/uploads/2024/12/how-to-initialize-the-database-in-horilla-hrms-step-by-step-1-1024x576.png)
+If everything is configured correctly, you should be able to access your Sleektiv - HRIS app at **http://localhost:8000**.
 
 
 #### **Initial Setup**
 From the login page, you will have two options:
-1. **Initialize Database**: Use this option to initialize the Horilla database by creating a super admin, headquarter company, department, and job position. Authenticate using the `DB_INIT_PASSWORD` specified in the `.env` file.
+1. **Initialize Database**: Use this option to initialize the Sleektiv - HRIS database by creating a super admin, headquarter company, department, and job position. Authenticate using the `DB_INIT_PASSWORD` specified in the `.env` file.
 2. **Load Demo Data**: Use this option if you want to work with demo data. Authenticate using the `DB_INIT_PASSWORD` specified in the `.env` file.
 
 #### **Running on a Custom Port**
-If you wish to run the Horilla application on a different port, specify the port number after the `runserver` command. For example:
+If you wish to run the Sleektiv - HRIS application on a different port, specify the port number after the `runserver` command. For example:
 ```bash
 python3 manage.py runserver 8080  # For Ubuntu/macOS
 python manage.py runserver 8080   # For Windows
@@ -327,8 +322,8 @@ python manage.py runserver 8080   # For Windows
 ## **Roadmap**
 
 - **Calendar App** - Development Under Process
-- **Project Management** - Development Under Process
 - **Chat App** - Development Under Process
+- **Integration with Sleektiv Mini ERP & Sleektiv All Community** - Development Under Process
 - **More to come...**
 
 ---
@@ -367,16 +362,16 @@ python manage.py runserver 8080   # For Windows
 
 ---
 
-## **Authors**
+## **Credits**
 
 [Cybrosys Technologies](https://www.cybrosys.com/)
-
+[Horilla](https://www.horilla.com/)
 ---
 
 ## **About**
 
-[Horilla](https://www.horilla.com/) is an open-source HRMS solution designed to simplify HR operations and improve organizational efficiency.
+[Sleektiv - HRIS](https://www.sleektiv.com/) is an open-source HRMS solution designed to simplify HR operations and improve organizational efficiency.
 
 ---
 
-This README provides a comprehensive guide to installing and setting up Horilla on various platforms. If you encounter any issues, feel free to reach out to the Horilla community for support. Happy coding! 🚀
+This README provides a comprehensive guide to installing and setting up Sleektiv - HRIS on various platforms. If you encounter any issues, feel free to reach out to the Sleektiv - HRIS community for support. Happy coding! 🚀
