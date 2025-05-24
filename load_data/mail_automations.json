@@ -1,6 +1,6 @@
 [
     {
-        "model": "horilla_automations.mailautomation",
+        "model": "sleektiv_automations.mailautomation",
         "pk": 1,
         "fields": {
             "created_at": "2025-04-30T06:35:03.533Z",
@@ -24,7 +24,7 @@
         }
     },
     {
-        "model": "horilla_automations.mailautomation",
+        "model": "sleektiv_automations.mailautomation",
         "pk": 2,
         "fields": {
             "created_at": "2025-04-30T06:35:03.555Z",
@@ -48,7 +48,7 @@
         }
     },
     {
-        "model": "horilla_automations.mailautomation",
+        "model": "sleektiv_automations.mailautomation",
         "pk": 3,
         "fields": {
             "created_at": "2025-04-30T06:35:03.575Z",
@@ -72,7 +72,7 @@
         }
     },
     {
-        "model": "horilla_automations.mailautomation",
+        "model": "sleektiv_automations.mailautomation",
         "pk": 4,
         "fields": {
             "created_at": "2025-04-30T06:35:03.600Z",
@@ -96,7 +96,7 @@
         }
     },
     {
-        "model": "horilla_automations.mailautomation",
+        "model": "sleektiv_automations.mailautomation",
         "pk": 5,
         "fields": {
             "created_at": "2025-04-30T06:35:03.620Z",
@@ -120,7 +120,7 @@
         }
     },
     {
-        "model": "horilla_automations.mailautomation",
+        "model": "sleektiv_automations.mailautomation",
         "pk": 6,
         "fields": {
             "created_at": "2025-04-30T06:35:03.644Z",

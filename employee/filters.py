@@ -16,10 +16,10 @@ from accessibility.methods import check_is_accessible
 from accessibility.models import DefaultAccessibility
 from base.methods import filtersubordinatesemployeemodel
 from employee.models import DisciplinaryAction, Employee, Policy
-from horilla.filters import FilterSet, HorillaFilterSet, filter_by_name
-from horilla.horilla_middlewares import _thread_locals
-from horilla_documents.models import Document
-from horilla_views.templatetags.generic_template_filters import getattribute
+from sleektiv.filters import FilterSet, HorillaFilterSet, filter_by_name
+from sleektiv.sleektiv_middlewares import _thread_locals
+from sleektiv_documents.models import Document
+from sleektiv_views.templatetags.generic_template_filters import getattribute
 
 
 class EmployeeFilter(HorillaFilterSet):

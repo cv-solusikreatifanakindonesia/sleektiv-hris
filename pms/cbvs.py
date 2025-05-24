@@ -10,9 +10,9 @@ from django.utils.translation import gettext_lazy as _
 
 from base.methods import filter_own_and_subordinate_recordes, is_reportingmanager
 from employee.models import Employee
-from horilla import horilla_middlewares
-from horilla.decorators import login_required, owner_can_enter, permission_required
-from horilla_views.generic.cbv import views
+from sleektiv import sleektiv_middlewares
+from sleektiv.decorators import login_required, owner_can_enter, permission_required
+from sleektiv_views.generic.cbv import views
 from pms import models
 from pms.filters import BonusPointSettingFilter, EmployeeBonusPointFilter
 from pms.forms import (
@@ -264,7 +264,7 @@ class EmployeeBonusPointListView(views.HorillaListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         if is_reportingmanager(request) or request.user.has_perm(
             "pms.view_employeebonuspoint"
         ):

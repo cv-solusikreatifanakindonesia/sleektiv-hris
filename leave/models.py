@@ -14,7 +14,7 @@ from django.db.models import Q, Sum
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from base.horilla_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import HorillaCompanyManager
 from base.models import (
     Company,
     CompanyLeaves,
@@ -25,10 +25,10 @@ from base.models import (
     clear_messages,
 )
 from employee.models import Employee, EmployeeWorkInformation
-from horilla import horilla_middlewares
-from horilla.models import HorillaModel
-from horilla_audit.methods import get_diff
-from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
+from sleektiv import sleektiv_middlewares
+from sleektiv.models import HorillaModel
+from sleektiv_audit.methods import get_diff
+from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
 from leave.methods import (
     calculate_requested_days,
     company_leave_dates_list,
@@ -853,7 +853,7 @@ class LeaveRequest(HorillaModel):
         leave_type = self.leave_type_id
         requ_days = set(self.requested_dates())
         restricted_leaves = RestrictLeave.objects.all()
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
 
         # Check if leave type is assigned to employee
         if not AvailableLeave.objects.filter(
@@ -1069,7 +1069,7 @@ class LeaveRequest(HorillaModel):
         return result
 
     def is_approved(self):
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         if request:
             employee = Employee.objects.filter(employee_user_id=request.user).first()
             condition_approval = LeaveRequestConditionApproval.objects.filter(
@@ -1087,7 +1087,7 @@ class LeaveRequest(HorillaModel):
             # Update the leave clashes count for all relevant leave requests
             self.update_leave_clashes_count()
         else:
-            request = getattr(horilla_middlewares._thread_locals, "request", None)
+            request = getattr(sleektiv_middlewares._thread_locals, "request", None)
             if request:
                 clear_messages(request)
                 messages.warning(
@@ -1416,7 +1416,7 @@ if apps.is_installed("attendance"):
         #     """
         #     Overriding LeaveRequest model save method
         #     """
-        #     WorkRecords = get_horilla_model_class(
+        #     WorkRecords = get_sleektiv_model_class(
         #         app_label="attendance", model="workrecords"
         #     )
         #     if (

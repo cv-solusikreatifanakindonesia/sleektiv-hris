@@ -14,9 +14,9 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 
 from employee.models import Employee
-from horilla.horilla_middlewares import _thread_locals
-from horilla_views.cbv_methods import login_required, permission_required
-from horilla_views.generic.cbv.views import (
+from sleektiv.sleektiv_middlewares import _thread_locals
+from sleektiv_views.cbv_methods import login_required, permission_required
+from sleektiv_views.generic.cbv.views import (
     HorillaCardView,
     HorillaFormView,
     HorillaListView,
@@ -513,7 +513,7 @@ class ProjectsTabView(ListView):
         return context
 
 
-# Remove the command lines after horilla converted into CBV
+# Remove the command lines after sleektiv converted into CBV
 # from employee.cbv.employee_profile import EmployeeProfileView
 # EmployeeProfileView.add_tab(
 #     tabs=[

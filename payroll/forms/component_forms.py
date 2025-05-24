@@ -19,11 +19,11 @@ from base.forms import Form, ModelForm
 from base.methods import reload_queryset
 from employee.filters import EmployeeFilter
 from employee.models import BonusPoint, Employee
-from horilla import horilla_middlewares
-from horilla.methods import get_horilla_model_class
-from horilla_widgets.forms import HorillaForm, default_select_option_template
-from horilla_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
-from horilla_widgets.widgets.select_widgets import HorillaMultiSelectWidget
+from sleektiv import sleektiv_middlewares
+from sleektiv.methods import get_sleektiv_model_class
+from sleektiv_widgets.forms import HorillaForm, default_select_option_template
+from sleektiv_widgets.widgets.sleektiv_multi_select_field import HorillaMultiSelectField
+from sleektiv_widgets.widgets.select_widgets import HorillaMultiSelectWidget
 from notifications.signals import notify
 from payroll.models import tax_models as models
 from payroll.models.models import (
@@ -798,7 +798,7 @@ class ReimbursementForm(ModelForm):
     if apps.is_installed("leave"):
 
         def get_encashable_leaves(self, employee):
-            LeaveType = get_horilla_model_class(app_label="leave", model="leavetype")
+            LeaveType = get_sleektiv_model_class(app_label="leave", model="leavetype")
             leaves = LeaveType.objects.filter(
                 employee_available_leave__employee_id=employee,
                 employee_available_leave__total_leave_days__gte=1,
@@ -813,7 +813,7 @@ class ReimbursementForm(ModelForm):
         if not self.instance.pk:
             self.initial["allowance_on"] = str(datetime.date.today())
 
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         if request:
             employee = (
                 request.user.employee_get
@@ -822,7 +822,7 @@ class ReimbursementForm(ModelForm):
             )
         self.initial["employee_id"] = employee.id
         if apps.is_installed("leave"):
-            AvailableLeave = get_horilla_model_class(
+            AvailableLeave = get_sleektiv_model_class(
                 app_label="leave", model="availableleave"
             )
 
@@ -903,7 +903,7 @@ class ReimbursementForm(ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         if self.instance.pk:
             employee_id = self.instance.employee_id
             type = self.instance.type
@@ -944,7 +944,7 @@ class ReimbursementForm(ModelForm):
                     {"leave_type_id": "This leave type is not encashable"}
                 )
             else:
-                AvailableLeave = get_horilla_model_class(
+                AvailableLeave = get_sleektiv_model_class(
                     app_label="leave", model="availableleave"
                 )
                 available_leave = AvailableLeave.objects.filter(

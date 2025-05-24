@@ -37,7 +37,7 @@ from base.methods import (
 )
 from base.models import Company
 from employee.models import Employee, EmployeeWorkInformation
-from horilla.decorators import (
+from sleektiv.decorators import (
     hx_request_required,
     login_required,
     manager_can_enter,
@@ -45,9 +45,9 @@ from horilla.decorators import (
     owner_can_enter,
     permission_required,
 )
-from horilla.group_by import group_by_queryset
-from horilla_automations.methods.methods import generate_choices
-from horilla_automations.methods.serialize import serialize_form
+from sleektiv.group_by import group_by_queryset
+from sleektiv_automations.methods.methods import generate_choices
+from sleektiv_automations.methods.serialize import serialize_form
 from notifications.signals import notify
 from pms.filters import (
     ActualKeyResultFilter,

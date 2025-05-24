@@ -16,11 +16,11 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from base.horilla_company_manager import HorillaCompanyManager
-from horilla import horilla_middlewares
-from horilla.horilla_middlewares import _thread_locals
-from horilla.models import HorillaModel
-from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
+from base.sleektiv_company_manager import HorillaCompanyManager
+from sleektiv import sleektiv_middlewares
+from sleektiv.sleektiv_middlewares import _thread_locals
+from sleektiv.models import HorillaModel
+from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
 
 # Create your models here.
 WEEKS = [
@@ -601,7 +601,7 @@ class EmployeeShiftSchedule(HorillaModel):
         blank=True,
         verbose_name=_("Automatic Check Out Time"),
         help_text=_(
-            "Time at which the horilla will automatically check out the employee attendance if they forget."
+            "Time at which the sleektiv will automatically check out the employee attendance if they forget."
         ),
     )
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
@@ -941,7 +941,7 @@ class WorkTypeRequest(HorillaModel):
         return False
 
     def clean(self):
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         if not request.user.is_superuser:
             if self.requested_date < django.utils.timezone.now().date():
                 raise ValidationError(_("Date must be greater than or equal to today"))
@@ -1060,7 +1060,7 @@ class ShiftRequest(HorillaModel):
 
     def clean(self):
 
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         if not request.user.is_superuser:
             if not self.pk and self.requested_date < django.utils.timezone.now().date():
                 raise ValidationError(_("Date must be greater than or equal to today"))

@@ -27,13 +27,13 @@ from attendance.methods.utils import (
     validate_time_format,
     validate_time_in_minutes,
 )
-from base.horilla_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import HorillaCompanyManager
 from base.methods import is_company_leave, is_holiday
 from base.models import Company, EmployeeShift, EmployeeShiftDay, WorkType
 from employee.models import Employee
-from horilla.methods import get_horilla_model_class
-from horilla.models import HorillaModel
-from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
+from sleektiv.methods import get_sleektiv_model_class
+from sleektiv.models import HorillaModel
+from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
 
 # to skip the migration issue with the old migrations
 _validate_time_in_minutes = validate_time_in_minutes

@@ -157,8 +157,8 @@ from employee.models import (
     EmployeeWorkInformation,
     ProfileEditFeature,
 )
-from horilla import horilla_apps
-from horilla.decorators import (
+from sleektiv import sleektiv_apps
+from sleektiv.decorators import (
     delete_permission,
     duplicate_permission,
     hx_request_required,
@@ -166,17 +166,17 @@ from horilla.decorators import (
     manager_can_enter,
     permission_required,
 )
-from horilla.group_by import group_by_queryset
-from horilla.horilla_settings import (
+from sleektiv.group_by import group_by_queryset
+from sleektiv.sleektiv_settings import (
     APPS,
     DB_INIT_PASSWORD,
     DYNAMIC_URL_PATTERNS,
     FILE_STORAGE,
     NO_PERMISSION_MODALS,
 )
-from horilla.methods import get_horilla_model_class, remove_dynamic_url
-from horilla_audit.forms import HistoryTrackingFieldsForm
-from horilla_audit.models import AccountBlockUnblock, AuditTag, HistoryTrackingFields
+from sleektiv.methods import get_sleektiv_model_class, remove_dynamic_url
+from sleektiv_audit.forms import HistoryTrackingFieldsForm
+from sleektiv_audit.models import AccountBlockUnblock, AuditTag, HistoryTrackingFields
 from notifications.models import Notification
 from notifications.signals import notify
 
@@ -290,7 +290,7 @@ def initialize_database(request):
                     _("The password you entered is incorrect. Please try again."),
                 )
                 return HttpResponse("<script>window.location.reload()</script>")
-        return render(request, "initialize_database/horilla_user.html")
+        return render(request, "initialize_database/sleektiv_user.html")
     else:
         return redirect("/")
 
@@ -312,7 +312,7 @@ def initialize_database_user(request):
         password = form_data.get("password")
         confirm_password = form_data.get("confirm_password")
         if password != confirm_password:
-            return render(request, "initialize_database/horilla_user_signup.html")
+            return render(request, "initialize_database/sleektiv_user_signup.html")
         first_name = form_data.get("firstname")
         last_name = form_data.get("lastname")
         badge_id = form_data.get("badge_id")
@@ -336,10 +336,10 @@ def initialize_database_user(request):
         login(request, user)
         return render(
             request,
-            "initialize_database/horilla_company.html",
+            "initialize_database/sleektiv_company.html",
             {"form": CompanyForm(initial={"hq": True})},
         )
-    return render(request, "initialize_database/horilla_user_signup.html")
+    return render(request, "initialize_database/sleektiv_user_signup.html")
 
 
 @hx_request_required
@@ -366,10 +366,10 @@ def initialize_database_company(request):
                 pass
             return render(
                 request,
-                "initialize_database/horilla_department.html",
+                "initialize_database/sleektiv_department.html",
                 {"form": DepartmentForm(initial={"company_id": company})},
             )
-    return render(request, "initialize_database/horilla_company.html", {"form": form})
+    return render(request, "initialize_database/sleektiv_company.html", {"form": form})
 
 
 @hx_request_required
@@ -393,7 +393,7 @@ def initialize_database_department(request):
             form = DepartmentForm(initial={"company_id": company})
     return render(
         request,
-        "initialize_database/horilla_department_form.html",
+        "initialize_database/sleektiv_department_form.html",
         {"form": form, "departments": departments},
     )
 
@@ -419,7 +419,7 @@ def initialize_department_edit(request, obj_id):
             form.save()
             return render(
                 request,
-                "initialize_database/horilla_department_form.html",
+                "initialize_database/sleektiv_department_form.html",
                 {
                     "form": DepartmentForm(initial={"company_id": company}),
                     "departments": Department.objects.all(),
@@ -427,7 +427,7 @@ def initialize_department_edit(request, obj_id):
             )
     return render(
         request,
-        "initialize_database/horilla_department_form.html",
+        "initialize_database/sleektiv_department_form.html",
         {
             "form": form,
             "department": department,
@@ -473,7 +473,7 @@ def initialize_database_job_position(request):
             form = JobPositionMultiForm(initial={"company_id": Company.objects.first()})
         return render(
             request,
-            "initialize_database/horilla_job_position_form.html",
+            "initialize_database/sleektiv_job_position_form.html",
             {
                 "form": form,
                 "job_positions": JobPosition.objects.all(),
@@ -482,7 +482,7 @@ def initialize_database_job_position(request):
         )
     return render(
         request,
-        "initialize_database/horilla_job_position.html",
+        "initialize_database/sleektiv_job_position.html",
         {"form": form, "job_positions": JobPosition.objects.all(), "company": company},
     )
 
@@ -508,7 +508,7 @@ def initialize_job_position_edit(request, obj_id):
             form.save()
             return render(
                 request,
-                "initialize_database/horilla_job_position_form.html",
+                "initialize_database/sleektiv_job_position_form.html",
                 {
                     "form": JobPositionMultiForm(initial={"company_id": company}),
                     "job_positions": JobPosition.objects.all(),
@@ -517,7 +517,7 @@ def initialize_job_position_edit(request, obj_id):
             )
     return render(
         request,
-        "initialize_database/horilla_job_position_form.html",
+        "initialize_database/sleektiv_job_position_form.html",
         {
             "form": form,
             "job_position": job_position,
@@ -544,7 +544,7 @@ def initialize_job_position_delete(request, obj_id):
     job_position.delete() if job_position else None
     return render(
         request,
-        "initialize_database/horilla_job_position_form.html",
+        "initialize_database/sleektiv_job_position_form.html",
         {
             "form": JobPositionMultiForm(
                 initial={"company_id": Company.objects.first()}
@@ -1213,7 +1213,7 @@ def object_delete(request, obj_id, **kwargs):
         ),
 
     if apps.is_installed("pms") and redirect_path == "/pms/filter-key-result/":
-        KeyResult = get_horilla_model_class(app_label="pms", model="keyresult")
+        KeyResult = get_sleektiv_model_class(app_label="pms", model="keyresult")
         key_results = KeyResult.objects.all()
         if key_results.exists():
             previous_data = request.GET.urlencode()
@@ -1389,8 +1389,8 @@ def mail_server_conf(request):
 @permission_required("base.view_dynamicemailconfiguration")
 def mail_server_test_email(request):
     instance_id = request.GET.get("instance_id")
-    white_labelling = getattr(horilla_apps, "WHITE_LABELLING", False)
-    image_path = path.join(settings.STATIC_ROOT, "images/ui/horilla-logo.png")
+    white_labelling = getattr(sleektiv_apps, "WHITE_LABELLING", False)
+    image_path = path.join(settings.STATIC_ROOT, "images/ui/sleektiv-logo.png")
     company_name = "Horilla"
 
     if white_labelling:
@@ -1552,7 +1552,7 @@ def mail_server_create_or_update(request):
 
 
 @login_required
-@permission_required("base.view_horillamailtemplate")
+@permission_required("base.view_sleektivmailtemplate")
 def view_mail_templates(request):
     """
     This method will render template to disply the offerletter templates
@@ -1573,7 +1573,7 @@ def view_mail_templates(request):
 
 @login_required
 @hx_request_required
-@permission_required("base.change_horillamailtemplate")
+@permission_required("base.change_sleektivmailtemplate")
 def view_mail_template(request, obj_id):
     """
     This method is used to display the template/form to edit
@@ -1597,7 +1597,7 @@ def view_mail_template(request, obj_id):
 
 @login_required
 @hx_request_required
-@permission_required("base.add_horillamailtemplate")
+@permission_required("base.add_sleektivmailtemplate")
 def create_mail_templates(request):
     """
     This method is used to create offerletter template
@@ -1621,7 +1621,7 @@ def create_mail_templates(request):
 
 
 @login_required
-@permission_required("base.delete_horillamailtemplate")
+@permission_required("base.delete_sleektivmailtemplate")
 def delete_mail_templates(request):
     ids = request.GET.getlist("ids")
     result = HorillaMailTemplate.objects.filter(id__in=ids).delete()
@@ -2504,7 +2504,7 @@ def employee_shift_view(request):
 
     shifts = EmployeeShift.objects.all()
     if apps.is_installed("attendance"):
-        GraceTime = get_horilla_model_class(app_label="attendance", model="gracetime")
+        GraceTime = get_sleektiv_model_class(app_label="attendance", model="gracetime")
         grace_times = GraceTime.objects.all().exclude(is_default=True)
     else:
         grace_times = None
@@ -5083,10 +5083,10 @@ def general_settings(request):
     This method is used to render settings template
     """
     if apps.is_installed("payroll"):
-        PayrollSettings = get_horilla_model_class(
+        PayrollSettings = get_sleektiv_model_class(
             app_label="payroll", model="payrollsettings"
         )
-        EncashmentGeneralSettings = get_horilla_model_class(
+        EncashmentGeneralSettings = get_sleektiv_model_class(
             app_label="payroll", model="encashmentgeneralsettings"
         )
         from payroll.forms.component_forms import PayrollSettingsForm
@@ -5378,7 +5378,7 @@ def history_field_settings(request):
 
 
 @login_required
-@permission_required("horilla_audit.change_accountblockunblock")
+@permission_required("sleektiv_audit.change_accountblockunblock")
 def enable_account_block_unblock(request):
     if request.method == "POST":
         enabled = request.POST.get("enable_block_account") == "on"
@@ -5619,7 +5619,7 @@ def rotating_work_type_select_filter(request):
 
 
 @login_required
-@permission_required("horilla_audit.view_audittag")
+@permission_required("sleektiv_audit.view_audittag")
 def tag_view(request):
     """
     This method is used to show Audit tags
@@ -5695,7 +5695,7 @@ def tag_update(request, tag_id):
 
 @login_required
 @hx_request_required
-@permission_required("horilla_audit.add_audittag")
+@permission_required("sleektiv_audit.add_audittag")
 def audit_tag_create(request):
     """
     This method renders form and template to create Ticket type
@@ -5719,7 +5719,7 @@ def audit_tag_create(request):
 
 @login_required
 @hx_request_required
-@permission_required("horilla_audit.change_audittag")
+@permission_required("sleektiv_audit.change_audittag")
 def audit_tag_update(request, tag_id):
     """
     This method renders form and template to create Ticket type
@@ -6731,7 +6731,7 @@ def activate_biometric_attendance(request):
 
 
 @login_required
-def get_horilla_installed_apps(request):
+def get_sleektiv_installed_apps(request):
     return JsonResponse({"installed_apps": APPS})
 
 

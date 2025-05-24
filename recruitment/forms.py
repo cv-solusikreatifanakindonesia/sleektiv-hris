@@ -38,10 +38,10 @@ from base.forms import ModelForm as BaseModelForm
 from base.methods import reload_queryset
 from employee.filters import EmployeeFilter
 from employee.models import Employee
-from horilla import horilla_middlewares
-from horilla.horilla_middlewares import _thread_locals
-from horilla_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
-from horilla_widgets.widgets.select_widgets import HorillaMultiSelectWidget
+from sleektiv import sleektiv_middlewares
+from sleektiv.sleektiv_middlewares import _thread_locals
+from sleektiv_widgets.widgets.sleektiv_multi_select_field import HorillaMultiSelectField
+from sleektiv_widgets.widgets.select_widgets import HorillaMultiSelectWidget
 from recruitment import widgets
 from recruitment.models import (
     Candidate,
@@ -74,7 +74,7 @@ class ModelForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         reload_queryset(self.fields)
         for field_name, field in self.fields.items():
             widget = field.widget
@@ -966,7 +966,7 @@ exclude_fields = [
     "modified_by",
     "is_active",
     "last_updated",
-    "horilla_history",
+    "sleektiv_history",
 ]
 
 

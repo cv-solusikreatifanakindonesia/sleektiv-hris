@@ -16,14 +16,14 @@ from base.methods import closest_numbers, eval_validate, paginator_qry, sortby
 from base.models import Department, JobPosition
 from base.views import general_settings
 from employee.models import Employee
-from horilla.decorators import (
+from sleektiv.decorators import (
     hx_request_required,
     login_required,
     manager_can_enter,
     permission_required,
 )
-from horilla.group_by import group_by_queryset as group_by
-from horilla.methods import get_horilla_model_class
+from sleektiv.group_by import group_by_queryset as group_by
+from sleektiv.methods import get_sleektiv_model_class
 from notifications.signals import notify
 from offboarding.decorators import (
     any_manager_can_enter,
@@ -855,7 +855,7 @@ def update_status(request):
     status = request.GET["status"]
     offboarding_id = request.GET.get("offboarding_id")
     default_notice_end = (
-        get_horilla_model_class(
+        get_sleektiv_model_class(
             app_label="payroll", model="payrollgeneralsetting"
         ).objects.first()
         if apps.is_installed("payroll")
@@ -957,7 +957,7 @@ def get_notice_period(request):
     """
     employee_id = request.GET["employee_id"]
     if apps.is_installed("payroll"):
-        Contract = get_horilla_model_class(app_label="payroll", model="contract")
+        Contract = get_sleektiv_model_class(app_label="payroll", model="contract")
         employee_contract = (
             (
                 Contract.objects.order_by("-id")
@@ -1013,7 +1013,7 @@ def offboarding_dashboard(request):
 
     onboarding_employees = []
     if apps.is_installed("recruitment"):
-        Candidate = get_horilla_model_class("recruitment", "candidate")
+        Candidate = get_sleektiv_model_class("recruitment", "candidate")
         onboarding_employees = Candidate.objects.filter(
             onboarding_stage__isnull=False, converted_employee_id__isnull=True
         )
@@ -1066,7 +1066,7 @@ if apps.is_installed("asset"):
         """
         This method is used to render the employee assets table page in the dashboard.
         """
-        AssetAssignment = get_horilla_model_class(
+        AssetAssignment = get_sleektiv_model_class(
             app_label="asset", model="assetassignment"
         )
 
@@ -1093,7 +1093,7 @@ if apps.is_installed("pms"):
         This method is used to render the employee assets table page in the dashboard.
         """
 
-        Feedback = get_horilla_model_class(app_label="pms", model="feedback")
+        Feedback = get_sleektiv_model_class(app_label="pms", model="feedback")
 
         offboarding_employees = OffboardingEmployee.objects.entire().values_list(
             "employee_id__id", "notice_period_starts"
@@ -1136,7 +1136,7 @@ def dashboard_join_chart(request):
         archived_employees.count(),
     ]
     if apps.is_installed("recruitment"):
-        Candidate = get_horilla_model_class(app_label="recruitment", model="candidate")
+        Candidate = get_sleektiv_model_class(app_label="recruitment", model="candidate")
         onboarding_employees = Candidate.objects.filter(
             onboarding_stage__isnull=False, converted_employee_id__isnull=True
         )

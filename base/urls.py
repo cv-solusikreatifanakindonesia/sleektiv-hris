@@ -32,7 +32,7 @@ from base.models import (
     WorkType,
     WorkTypeRequest,
 )
-from horilla_audit.models import AuditTag
+from sleektiv_audit.models import AuditTag
 
 urlpatterns = [
     path("", views.home, name="home-page"),
@@ -1002,9 +1002,9 @@ urlpatterns = [
         name="emp-workinfo-complete",
     ),
     path(
-        "get-horilla-installed-apps/",
-        views.get_horilla_installed_apps,
-        name="get-horilla-installed-apps",
+        "get-sleektiv-installed-apps/",
+        views.get_sleektiv_installed_apps,
+        name="get-sleektiv-installed-apps",
     ),
     path("configuration/holiday-view", views.holiday_view, name="holiday-view"),
     path(

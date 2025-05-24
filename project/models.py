@@ -18,9 +18,9 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from employee.models import Employee
-from horilla.horilla_middlewares import _thread_locals
-from horilla.models import HorillaModel
-from horilla_views.cbv_methods import render_template
+from sleektiv.sleektiv_middlewares import _thread_locals
+from sleektiv.models import HorillaModel
+from sleektiv_views.cbv_methods import render_template
 
 # Create your models here.
 

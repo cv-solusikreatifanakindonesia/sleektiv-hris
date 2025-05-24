@@ -25,9 +25,9 @@ from base.methods import (
     reload_queryset,
 )
 from employee.filters import EmployeeFilter
-from horilla import horilla_middlewares
-from horilla_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
-from horilla_widgets.widgets.select_widgets import HorillaMultiSelectWidget
+from sleektiv import sleektiv_middlewares
+from sleektiv_widgets.widgets.sleektiv_multi_select_field import HorillaMultiSelectField
+from sleektiv_widgets.widgets.select_widgets import HorillaMultiSelectWidget
 from pms.models import (
     AnonymousFeedback,
     BonusPointSetting,
@@ -349,7 +349,7 @@ class EmployeeObjectiveCreateForm(BaseForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
 
         if request.user.has_perm("pms.add_keyresult"):
             self.fields["key_result_id"].choices = list(
@@ -435,7 +435,7 @@ class EmployeeKeyResultForm(BaseForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         if self.initial.get("employee_objective_id"):
             if (
                 type(self.initial.get("employee_objective_id")) == int
@@ -708,7 +708,7 @@ class FeedbackForm(HorillaModelForm):
         """
         Initializes the form and queryset filtering.
         """
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         super().__init__(*args, **kwargs)
 
         user = request.user if request else None
@@ -1037,7 +1037,7 @@ class MeetingsForm(BaseForm):
         Render the form fields as HTML table rows with Bootstrap styling.
         """
         context = {"form": self}
-        table_html = render_to_string("horilla_form.html", context)
+        table_html = render_to_string("sleektiv_form.html", context)
         return table_html
 
     def clean(self):
@@ -1148,7 +1148,7 @@ class EmployeeBonusPointForm(HorillaModelForm):
         exclude = ["bonus_point_id", "instance", "is_active"]
 
     def __init__(self, *args, **kwargs):
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         super().__init__(*args, **kwargs)
         if request.GET.get("employee_id"):
             employee = Employee.objects.filter(id=request.GET["employee_id"])

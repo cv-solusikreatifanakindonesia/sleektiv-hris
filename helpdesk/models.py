@@ -7,12 +7,12 @@ from django.db.models.signals import post_delete, post_save
 from django.forms import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from base.horilla_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import HorillaCompanyManager
 from base.models import Company, Department, JobPosition, Tags
 from employee.models import Employee
-from horilla.models import HorillaModel
-from horilla_audit.methods import get_diff
-from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
+from sleektiv.models import HorillaModel
+from sleektiv_audit.methods import get_diff
+from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
 
 PRIORITY = [
     ("low", "Low"),

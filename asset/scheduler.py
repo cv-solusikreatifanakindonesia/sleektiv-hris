@@ -52,7 +52,7 @@ def notify_expiring_documents():
     """
     from django.contrib.auth.models import User
 
-    from horilla_documents.models import Document
+    from sleektiv_documents.models import Document
 
     today = date.today()
     documents = Document.objects.all()

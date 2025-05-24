@@ -1,4 +1,4 @@
-{% load static %} {% load i18n %} {% load horillafilters  %}
+{% load static %} {% load i18n %} {% load sleektivfilters  %}
 {% load basefilters %}
 {% verbatim %}
 <script>
@@ -243,7 +243,7 @@ function initializeSummernote(candId,searchWords,) {
               >
             </li>
             {% endif %}
-            {% if perms.base.view_horillamailtemplate %}
+            {% if perms.base.view_sleektivmailtemplate %}
             <li class="oh-sidebar__submenu-item">
               <a
                 class="oh-sidebar__submenu-link"
@@ -253,7 +253,7 @@ function initializeSummernote(candId,searchWords,) {
               >
             </li>
             {% endif %}
-            {% if "horilla_automations"|app_installed and perms.horilla_automations.view_mailautomation %}
+            {% if "sleektiv_automations"|app_installed and perms.sleektiv_automations.view_mailautomation %}
             <li class="oh-sidebar__submenu-item">
               <a
                 class="oh-sidebar__submenu-link"

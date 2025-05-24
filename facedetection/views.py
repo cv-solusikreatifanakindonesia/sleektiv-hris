@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from facedetection.forms import FaceDetectionSetupForm
-from horilla.decorators import hx_request_required
+from sleektiv.decorators import hx_request_required
 
 from .serializers import *
 

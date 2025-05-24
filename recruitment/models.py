@@ -25,13 +25,13 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from base.horilla_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import HorillaCompanyManager
 from base.models import Company, JobPosition
 from employee.models import Employee
-from horilla.models import HorillaModel
-from horilla_audit.methods import get_diff
-from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
-from horilla_views.cbv_methods import render_template
+from sleektiv.models import HorillaModel
+from sleektiv_audit.methods import get_diff
+from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
+from sleektiv_views.cbv_methods import render_template
 
 # Create your models here.
 

@@ -10,8 +10,8 @@ from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
-from horilla_views.cbv_methods import login_required
-from horilla_views.generic.cbv.views import HorillaFormView
+from sleektiv_views.cbv_methods import login_required
+from sleektiv_views.generic.cbv.views import HorillaFormView
 
 # from project.decorator import project_delete_permission
 from project.forms import ProjectStageForm

@@ -14,8 +14,8 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
 from employee.models import Employee
-from horilla_views.cbv_methods import login_required
-from horilla_views.generic.cbv.views import (
+from sleektiv_views.cbv_methods import login_required
+from sleektiv_views.generic.cbv.views import (
     HorillaCardView,
     HorillaDetailedView,
     HorillaFormView,

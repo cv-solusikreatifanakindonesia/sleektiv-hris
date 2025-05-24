@@ -8,7 +8,7 @@ class ProjectConfig(AppConfig):
     def ready(self):
         from django.urls import include, path
 
-        from horilla.urls import urlpatterns
+        from sleektiv.urls import urlpatterns
 
         urlpatterns.append(
             path("project/", include("project.urls")),
@@ -17,7 +17,7 @@ class ProjectConfig(AppConfig):
         try:
             from django.urls import include, path
 
-            from horilla.urls import urlpatterns
+            from sleektiv.urls import urlpatterns
 
             urlpatterns.append(
                 path("project/", include("project.urls")),

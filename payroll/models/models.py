@@ -16,7 +16,7 @@ from django.http import QueryDict
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from base.horilla_company_manager import HorillaCompanyManager
+from base.sleektiv_company_manager import HorillaCompanyManager
 from base.methods import get_next_month_same_date
 from base.models import (
     Company,
@@ -29,9 +29,9 @@ from base.models import (
 )
 from employee.methods.duration_methods import strtime_seconds
 from employee.models import BonusPoint, Employee, EmployeeWorkInformation
-from horilla import horilla_middlewares
-from horilla.models import HorillaModel
-from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
+from sleektiv import sleektiv_middlewares
+from sleektiv.models import HorillaModel
+from sleektiv_audit.models import HorillaAuditInfo, HorillaAuditLog
 
 logger = logging.getLogger(__name__)
 
@@ -1638,7 +1638,7 @@ class Reimbursement(HorillaModel):
         ordering = ["-id"]
 
     def save(self, *args, **kwargs) -> None:
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         amount_for_leave = (
             EncashmentGeneralSettings.objects.first().leave_amount
             if EncashmentGeneralSettings.objects.first()
@@ -1686,7 +1686,7 @@ class Reimbursement(HorillaModel):
                         bonus_points.save()
                     else:
                         request = getattr(
-                            horilla_middlewares._thread_locals, "request", None
+                            sleektiv_middlewares._thread_locals, "request", None
                         )
                         if request:
                             messages.info(
@@ -1712,7 +1712,7 @@ class Reimbursement(HorillaModel):
                             assigned_leave.save()
                         else:
                             request = getattr(
-                                horilla_middlewares._thread_locals, "request", None
+                                sleektiv_middlewares._thread_locals, "request", None
                             )
                             if request:
                                 messages.info(
@@ -1755,7 +1755,7 @@ class Reimbursement(HorillaModel):
                     self.allowance_id.delete()
 
     def delete(self, *args, **kwargs):
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(sleektiv_middlewares._thread_locals, "request", None)
         if self.status == "approved":
             message = messages.info(
                 request,
